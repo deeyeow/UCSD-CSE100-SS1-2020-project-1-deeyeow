@@ -1,0 +1,11 @@
+[
+    {
+        "name": "C++",
+        "compilers": {
+            "CXX": "/usr/bin/c++"
+        },
+        "preferredGenerator": {
+            "name": "Unix Makefiles"
+        }
+    }
+]

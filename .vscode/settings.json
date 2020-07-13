@@ -1,0 +1,14 @@
+{
+    "editor.formatOnSave": true,
+    "gitlens.blame.compact": false,
+    "files.associations": {
+        "iosfwd": "cpp",
+        "istream": "cpp",
+        "*.tcc": "cpp",
+        "iostream": "cpp",
+        "fstream": "cpp",
+        "string": "cpp"
+    },
+    "cmake.preferredGenerators": [],
+    "cmake.generator": "Unix Makefiles"
+}
