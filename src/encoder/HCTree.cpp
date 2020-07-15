@@ -40,7 +40,7 @@ void HCTree::build(const vector<unsigned int>& freqs) {
         if (freqs[i] != 0) pq.push(new HCNode(freqs[i], i));
     }
 
-    // account for when freqs array is all 0s
+    // account for when freqs vector is all 0s
     if (pq.empty()) return;
 
     // organize priority queue using huffman encoding, until only one element
@@ -53,12 +53,25 @@ void HCTree::build(const vector<unsigned int>& freqs) {
         HCNode* larger = pq.top();
         pq.pop();
 
+        // if popped node is a leaf, add to leaves vector
+        if (smaller->c0 == nullptr && smaller->c1 == nullptr)
+            leaves[smaller->symbol] = smaller;
+        if (larger->c0 == nullptr && larger->c1 == nullptr)
+            leaves[larger->symbol] = larger;
+
         // combined node has count of c0 + c1, and symbol of c0
         HCNode* combined =
             new HCNode(smaller->count + larger->count, smaller->symbol);
+
+        // set children
         combined->c0 = smaller;
         combined->c1 = larger;
 
+        // set parent
+        smaller->p = combined;
+        larger->p = combined;
+
+        // push back into priority queue
         pq.push(combined);
     }
 
@@ -84,7 +97,13 @@ void HCTree::build(const vector<unsigned int>& freqs) {
  * efficient encoding. For this function to work, build() must have been called
  * beforehand to create the HCTree.
  */
-void HCTree::encode(byte symbol, ostream& out) const {}
+void HCTree::encode(byte symbol, ostream& out) const {
+    // huffman tree should have been built by now, as well as leaves vector
+    // for (leaf in leaves) traverse up tree until hit root, adding each '0' or
+    // '1' to a stack
+    // pop all from stack to reveal encoded letter in correct order
+    // push results to outstream
+}
 
 /**
  * TODO: Decode the sequence of bits (represented as a char of either '0' or
@@ -98,4 +117,29 @@ void HCTree::encode(byte symbol, ostream& out) const {}
  * from istream to return the coded symbol. For this function to work, build()
  * must have been called beforehand to create the HCTree.
  */
-byte HCTree::decode(istream& in) const { return ' '; }
+byte HCTree::decode(istream& in) const {
+    unsigned char c;
+    HCNode* curr = root;
+
+    // keep reading in from stream, until eof
+    while (1) {
+        cout << curr->symbol << " ";
+        // get next char from stream
+        c = (unsigned char)in.get();
+        // check not eof
+        if (in.eof()) break;
+
+        // if '0', traverse left
+        if (c == '0') curr = curr->c0;
+        // else, traverse right
+        else
+            curr = curr->c1;
+
+        // if leaf node, found letter and return (stops at first leaf node
+        // found, doesn't process rest of istream)
+        if (curr->c0 == nullptr && curr->c1 == nullptr) return curr->symbol;
+    }
+
+    // stream too short, stopped at inner node
+    return ' ';
+}
