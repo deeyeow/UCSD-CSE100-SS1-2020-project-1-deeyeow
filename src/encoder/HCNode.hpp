@@ -21,6 +21,11 @@ class HCNode {
     HCNode(unsigned int count, byte symbol, HCNode* c0 = 0, HCNode* c1 = 0,
            HCNode* p = 0)
         : count(count), symbol(symbol), c0(c0), c1(c1), p(p) {}
+
+    bool operator<(HCNode const& other) const {
+        if (count != other.count) return count > other.count;
+        return symbol < other.symbol;
+    }
 };
 
 /* For printing an HCNode to an ostream. Possibly useful for debugging */
@@ -32,10 +37,10 @@ ostream& operator<<(ostream& stm, const HCNode& n) {
 
 /* Comparator of HCNode pointer. In priority queue, HCNode ptr with lower count
  * has higher priority, and if count is the same, HCNode ptr with larger symbol
- * has higher prioruty.
+ * has higher priority.
  */
 struct HCNodePtrComp {
     /* TODO */
-    bool operator()(HCNode*& lhs, HCNode*& rhs) const { return false; }
+    bool operator()(HCNode*& lhs, HCNode*& rhs) const { return *lhs < *rhs; }
 };
 #endif  // HCNODE_HPP
