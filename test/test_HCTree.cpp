@@ -33,3 +33,7 @@ TEST_F(SimpleHCTreeFixture, TEST_DECODE) {
     istringstream is("1");
     ASSERT_EQ(tree.decode(is), ' ');
 }
+
+TEST_F(SimpleHCTreeFixture, TEST_CONSTRUCTOR) {
+    
+}
