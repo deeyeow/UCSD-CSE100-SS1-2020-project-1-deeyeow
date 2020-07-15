@@ -17,7 +17,7 @@ class SimpleHCQueueFixture : public ::testing::Test {
     SimpleHCQueueFixture() {}
 };
 
-TEST_F(SimpleHCQueueFixture, TEST_PQ_COUNT) {
+TEST_F(SimpleHCQueueFixture, TEST_PQ_DESC_COUNT) {
     pq.push(new HCNode(2, 0));
     pq.push(new HCNode(1, 0));
 
@@ -28,7 +28,29 @@ TEST_F(SimpleHCQueueFixture, TEST_PQ_COUNT) {
     ASSERT_TRUE(*popped2 < *popped1);
 }
 
-TEST_F(SimpleHCQueueFixture, TEST_PQ_SYMBOL) {
+TEST_F(SimpleHCQueueFixture, TEST_PQ_ASC_COUNT) {
+    pq.push(new HCNode(1, 0));
+    pq.push(new HCNode(2, 0));
+
+    HCNode* popped1 = pq.top();
+    pq.pop();
+    HCNode* popped2 = pq.top();
+    cout << *popped1 << ", " << *popped2 << endl;
+    ASSERT_TRUE(*popped2 < *popped1);
+}
+
+TEST_F(SimpleHCQueueFixture, TEST_PQ_DESC_SYMBOL) {
+    pq.push(new HCNode(1, 1));
+    pq.push(new HCNode(1, 0));
+
+    HCNode* popped1 = pq.top();
+    pq.pop();
+    HCNode* popped2 = pq.top();
+    cout << *popped1 << ", " << *popped2 << endl;
+    ASSERT_TRUE(*popped2 < *popped1);
+}
+
+TEST_F(SimpleHCQueueFixture, TEST_PQ_ASC_SYMBOL) {
     pq.push(new HCNode(1, 0));
     pq.push(new HCNode(1, 1));
 

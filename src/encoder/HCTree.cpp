@@ -28,7 +28,43 @@ void HCTree::deleteHCNode(HCNode* curr) {
  * node will be the ‘c0’ child of the new parent HCNode.
  *    3. The symbol of any parent node should be taken from its 'c0' child.
  */
-void HCTree::build(const vector<unsigned int>& freqs) {}
+void HCTree::build(const vector<unsigned int>& freqs) {
+    // account for when freqs array is empty
+    if (freqs.empty()) return;
+
+    priority_queue<HCNode*, vector<HCNode*>, HCNodePtrComp> pq;
+
+    // iterate through freqs array
+    for (int i = 0; i < 256; i++) {
+        // if element has a frequency, push into priority queue
+        if (freqs[i] != 0) pq.push(new HCNode(freqs[i], i));
+    }
+
+    // account for when freqs array is all 0s
+    if (pq.empty()) return;
+
+    // organize priority queue using huffman encoding, until only one element
+    // left
+    while (pq.size() != 1) {
+        // if more than one element in priority queue, need to keep popping,
+        // combining, and pushing back
+        HCNode* smaller = pq.top();
+        pq.pop();
+        HCNode* larger = pq.top();
+        pq.pop();
+
+        // combined node has count of c0 + c1, and symbol of c0
+        HCNode* combined =
+            new HCNode(smaller->count + larger->count, smaller->symbol);
+        combined->c0 = smaller;
+        combined->c1 = larger;
+
+        pq.push(combined);
+    }
+
+    // priority queue only has 1 element left, set to root
+    root = pq.top();
+}
 
 /**
  * TODO: Write the encoding bits of the given symbol to the ostream. You should
