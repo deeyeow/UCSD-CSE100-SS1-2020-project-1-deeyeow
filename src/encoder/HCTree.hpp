@@ -17,9 +17,14 @@ class HCTree {
 
   public:
     /* TODO: Initializes a new empty HCTree.*/
-    HCTree() {}
+    HCTree() { root = nullptr; }
+
+    HCTree(HCNode* _root) { root = _root; }
 
     ~HCTree();
+
+    // helper method for destructor
+    void static deleteHCNode(HCNode* curr);
 
     void build(const vector<unsigned int>& freqs);
 

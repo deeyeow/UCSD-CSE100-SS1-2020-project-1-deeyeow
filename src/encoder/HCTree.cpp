@@ -1,7 +1,14 @@
 #include "HCTree.hpp"
 
 /* TODO: Delete all objects on the heap to avoid memory leaks. */
-HCTree::~HCTree() {}
+HCTree::~HCTree() { deleteHCNode(root); }
+
+void HCTree::deleteHCNode(HCNode* curr) {
+    if (curr == nullptr) return;
+    deleteHCNode(curr->c0);
+    deleteHCNode(curr->c1);
+    delete curr;
+}
 
 /**
  * TODO: Build the HCTree from the given frequency vector. You can assume the
