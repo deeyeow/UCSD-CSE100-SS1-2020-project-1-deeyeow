@@ -45,7 +45,7 @@ void HCTree::build(const vector<unsigned int>& freqs) {
 
     // organize priority queue using huffman encoding, until only one element
     // left
-    while (pq.size() != 1) {
+    while (pq.size() > 1) {
         // if more than one element in priority queue, need to keep popping,
         // combining, and pushing back
         HCNode* smaller = pq.top();
