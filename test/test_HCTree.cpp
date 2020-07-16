@@ -17,9 +17,9 @@ class SimpleHCTreeFixture : public ::testing::Test {
     SimpleHCTreeFixture() {
         // initialization code here
         vector<unsigned int> freqs(256);
-        freqs['a'] = 2;
-        freqs['b'] = 3;
-        // tree.build(freqs);
+        freqs['A'] = 2;
+        freqs['B'] = 3;
+        tree.build(freqs);
     }
 };
 
@@ -66,18 +66,11 @@ class ManualHCTreeFixture : public ::testing::Test {
 };
 
 
-/*
 TEST_F(SimpleHCTreeFixture, TEST_ENCODE) {
     ostringstream os;
     tree.encode('a', os);
     ASSERT_EQ(os.str(), "");
 }
-
-TEST_F(SimpleHCTreeFixture, TEST_DECODE) {
-    istringstream is("1");
-    ASSERT_EQ(tree.decode(is), ' ');
-}
-*/
 
 TEST_F(SimpleHCTreeFixture, TEST_DELETE_HCNODE) {
     HCNode* root1 = new HCNode(1, 0);
@@ -85,13 +78,27 @@ TEST_F(SimpleHCTreeFixture, TEST_DELETE_HCNODE) {
     ASSERT_EQ(root1->count, NULL);
 }
 
-TEST_F(SimpleHCTreeFixture, TEST_BUILD_EMPTY_FREQS) {
-    /*
-    vector<unsigned int> tempFreqs;
+TEST_F(SimpleHCTreeFixture, TEST_BUILD_NULL_FREQ) {
+    vector<unsigned int> tempFreqs(256);
     HCTree tempTree;
     tempTree.build(tempFreqs);
-    ASSERT_TRUE()
-    */
+    istringstream is("001");
+    ASSERT_EQ(tempTree.decode(is), ' ');
+}
+
+TEST_F(SimpleHCTreeFixture, TEST_BUILD_ALL_ZEROS_FREQ) {
+    vector<unsigned int> tempFreqs(256);
+    tempFreqs['A'] = 0;
+    tempFreqs['B'] = 0;
+    HCTree tempTree;
+    tempTree.build(tempFreqs);
+    istringstream is("001");
+    ASSERT_EQ(tempTree.decode(is), ' ');
+}
+
+TEST_F(SimpleHCTreeFixture, TEST_DECODE) {
+    istringstream is("0");
+    ASSERT_EQ(tree.decode(is), 'A');
 }
 
 TEST_F(ManualHCTreeFixture, TEST_DECODE_NO_BUILD_GOOD_QUERY) {

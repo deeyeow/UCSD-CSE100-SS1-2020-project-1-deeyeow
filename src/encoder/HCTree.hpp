@@ -12,12 +12,15 @@ using namespace std;
 
 class HCTree {
   private:
-    HCNode* root;            // the root of HCTree
-    vector<HCNode*> leaves;  // a vector storing pointers to all leaf HCNodes
+    HCNode* root;             // the root of HCTree
+    vector<HCNode*>* leaves;  // a vector storing pointers to all leaf HCNodes
 
   public:
     /* TODO: Initializes a new empty HCTree.*/
-    HCTree() { root = nullptr; }
+    HCTree() {
+        root = nullptr;
+        leaves = new vector<HCNode*>(256);
+    }
 
     HCTree(HCNode* _root) { root = _root; }
 

@@ -1,7 +1,10 @@
 #include "HCTree.hpp"
 
 /* TODO: Delete all objects on the heap to avoid memory leaks. */
-HCTree::~HCTree() { deleteHCNode(root); }
+HCTree::~HCTree() {
+    deleteHCNode(root);
+    delete leaves;
+}
 
 void HCTree::deleteHCNode(HCNode* curr) {
     if (curr == nullptr) return;
@@ -37,7 +40,7 @@ void HCTree::build(const vector<unsigned int>& freqs) {
     // iterate through freqs array
     for (int i = 0; i < 256; i++) {
         // if element has a frequency, push into priority queue
-        if (freqs[i] != 0) pq.push(new HCNode(freqs[i], i));
+        if (freqs[i] != 0) pq.push(new HCNode(freqs[i], (unsigned char)i));
     }
 
     // account for when freqs vector is all 0s
@@ -55,9 +58,11 @@ void HCTree::build(const vector<unsigned int>& freqs) {
 
         // if popped node is a leaf, add to leaves vector
         if (smaller->c0 == nullptr && smaller->c1 == nullptr)
-            leaves[smaller->symbol] = smaller;
+            leaves->at(smaller->symbol) = smaller;
+        // leaves[smaller->symbol] = smaller;
         if (larger->c0 == nullptr && larger->c1 == nullptr)
-            leaves[larger->symbol] = larger;
+            leaves->at(larger->symbol) = larger;
+        // leaves[larger->symbol] = larger;
 
         // combined node has count of c0 + c1, and symbol of c0
         HCNode* combined =
@@ -118,6 +123,9 @@ void HCTree::encode(byte symbol, ostream& out) const {
  * must have been called beforehand to create the HCTree.
  */
 byte HCTree::decode(istream& in) const {
+    // check if tree has at least 1 node
+    if (root == nullptr) return ' ';
+
     unsigned char c;
     HCNode* curr = root;
 
