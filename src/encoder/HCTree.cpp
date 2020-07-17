@@ -103,7 +103,7 @@ void HCTree::build(const vector<unsigned int>& freqs) {
  * beforehand to create the HCTree.
  */
 
-// struct for to find element on a vector of pointers 
+// struct to find element on a vector of pointers 
 struct getSymbol {
     unsigned char symbol;
 
