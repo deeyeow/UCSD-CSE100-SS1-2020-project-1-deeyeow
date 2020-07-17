@@ -106,7 +106,7 @@ void HCTree::encode(byte symbol, ostream& out) const {
     // huffman tree should have been built by now, as well as leaves vector
     // for (leaf in leaves) traverse up tree until hit root, adding each '0' or
     // '1' to a stack
-    
+
     // pop all from stack to reveal encoded letter in correct order
     // push results to outstream
 }
@@ -145,8 +145,14 @@ byte HCTree::decode(istream& in) const {
             curr = curr->c1;
 
         // if leaf node, found letter and return (stops at first leaf node
-        // found, doesn't process rest of istream)
-        if (curr->c0 == nullptr && curr->c1 == nullptr) return curr->symbol;
+        // found, returns ' ' if input too long)
+        if (curr->c0 == nullptr && curr->c1 == nullptr) {
+            in.get();
+            if (in.eof())
+                return curr->symbol;
+            else
+                return ' ';
+        }
     }
 
     // stream too short, stopped at inner node
