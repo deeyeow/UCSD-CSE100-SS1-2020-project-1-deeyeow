@@ -65,8 +65,13 @@ class ManualHCTreeFixture : public ::testing::Test {
     }
 };
 
+TEST_F(SimpleHCTreeFixture, TEST_ENCODE_GOOD_QUERY) {
+    ostringstream os;
+    tree.encode('a', os);
+    ASSERT_EQ(os.str(), "");
+}
 
-TEST_F(SimpleHCTreeFixture, TEST_ENCODE) {
+TEST_F(SimpleHCTreeFixture, TEST_ENCODE_BAD_QUERY) {
     ostringstream os;
     tree.encode('a', os);
     ASSERT_EQ(os.str(), "");
@@ -96,7 +101,7 @@ TEST_F(SimpleHCTreeFixture, TEST_BUILD_ALL_ZEROS_FREQ) {
     ASSERT_EQ(tempTree.decode(is), ' ');
 }
 
-TEST_F(SimpleHCTreeFixture, TEST_DECODE) {
+TEST_F(SimpleHCTreeFixture, TEST_DECODE_GOOD_QUERY) {
     istringstream is("0");
     ASSERT_EQ(tree.decode(is), 'A');
 }
@@ -109,7 +114,12 @@ TEST_F(ManualHCTreeFixture, TEST_DECODE_NO_BUILD_GOOD_QUERY) {
     ASSERT_EQ(tree->decode(is), 'C');
 }
 
-TEST_F(ManualHCTreeFixture, TEST_DECODE_NO_BUILD_BAD_QUERY) {
+TEST_F(ManualHCTreeFixture, TEST_DECODE_NO_BUILD_BAD_QUERY_SHORT) {
     istringstream is("1");
+    ASSERT_EQ(tree->decode(is), ' ');
+}
+
+TEST_F(ManualHCTreeFixture, TEST_DECODE_NO_BUILD_BAD_QUERY_LONG) {
+    istringstream is("111");
     ASSERT_EQ(tree->decode(is), ' ');
 }

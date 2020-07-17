@@ -106,6 +106,7 @@ void HCTree::encode(byte symbol, ostream& out) const {
     // huffman tree should have been built by now, as well as leaves vector
     // for (leaf in leaves) traverse up tree until hit root, adding each '0' or
     // '1' to a stack
+    
     // pop all from stack to reveal encoded letter in correct order
     // push results to outstream
 }

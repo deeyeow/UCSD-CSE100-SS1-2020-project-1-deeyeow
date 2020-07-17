@@ -25,7 +25,7 @@ TEST_F(SimpleHCQueueFixture, TEST_PQ_DESC_COUNT) {
     pq.pop();
     HCNode* popped2 = pq.top();
     cout << *popped1 << ", " << *popped2 << endl;
-    ASSERT_TRUE(*popped2 < *popped1);
+    ASSERT_EQ(popped1->count, 1);
 }
 
 TEST_F(SimpleHCQueueFixture, TEST_PQ_ASC_COUNT) {
@@ -36,7 +36,7 @@ TEST_F(SimpleHCQueueFixture, TEST_PQ_ASC_COUNT) {
     pq.pop();
     HCNode* popped2 = pq.top();
     cout << *popped1 << ", " << *popped2 << endl;
-    ASSERT_TRUE(*popped2 < *popped1);
+    ASSERT_EQ(popped1->count, 1);
 }
 
 TEST_F(SimpleHCQueueFixture, TEST_PQ_DESC_SYMBOL) {
@@ -47,7 +47,7 @@ TEST_F(SimpleHCQueueFixture, TEST_PQ_DESC_SYMBOL) {
     pq.pop();
     HCNode* popped2 = pq.top();
     cout << *popped1 << ", " << *popped2 << endl;
-    ASSERT_TRUE(*popped2 < *popped1);
+    ASSERT_EQ(popped1->count, 1);
 }
 
 TEST_F(SimpleHCQueueFixture, TEST_PQ_ASC_SYMBOL) {
@@ -58,5 +58,5 @@ TEST_F(SimpleHCQueueFixture, TEST_PQ_ASC_SYMBOL) {
     pq.pop();
     HCNode* popped2 = pq.top();
     cout << *popped1 << ", " << *popped2 << endl;
-    ASSERT_TRUE(*popped2 < *popped1);
+    ASSERT_EQ(popped1->symbol, 1);
 }
