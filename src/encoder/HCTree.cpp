@@ -102,13 +102,46 @@ void HCTree::build(const vector<unsigned int>& freqs) {
  * efficient encoding. For this function to work, build() must have been called
  * beforehand to create the HCTree.
  */
+
+// struct for to find element on a vector of pointers 
+struct getSymbol {
+    unsigned char symbol;
+
+    getSymbol(unsigned char _symbol) : symbol(_symbol) {}
+
+    bool operator()(const HCNode* node) const { 
+        if (node == nullptr) return false;
+
+        return node->symbol == symbol; }
+};
+
 void HCTree::encode(byte symbol, ostream& out) const {
     // huffman tree should have been built by now, as well as leaves vector
-    // for (leaf in leaves) traverse up tree until hit root, adding each '0' or
-    // '1' to a stack
+    // check if symbol exists (is a leaf/in leaves vector)
+    if (find_if(leaves->begin(), leaves->end(), getSymbol(symbol)) ==
+        leaves->end())
+        return;
+
+    // get leaf, then traverse up tree until hit root, adding '0' or
+    // '1' to a stack depending if left/right child
+    HCNode* prev = leaves->at(symbol);
+    HCNode* curr = prev->p;
+    stack<unsigned char> stack;
+
+    while (curr != nullptr) {
+        if (curr->c0 == prev) stack.push('0');
+        else stack.push('1');
+
+        prev = curr;
+        curr = curr->p;
+    }
 
     // pop all from stack to reveal encoded letter in correct order
     // push results to outstream
+    while (!stack.empty()) {
+        out << stack.top();
+        stack.pop();
+    }
 }
 
 /**

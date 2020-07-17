@@ -17,8 +17,11 @@ class SimpleHCTreeFixture : public ::testing::Test {
     SimpleHCTreeFixture() {
         // initialization code here
         vector<unsigned int> freqs(256);
-        freqs['A'] = 2;
-        freqs['B'] = 3;
+        freqs['A'] = 1;
+        freqs['B'] = 2;
+        freqs['C'] = 2;
+        freqs['D'] = 3;
+        freqs['E'] = 4;
         tree.build(freqs);
     }
 };
@@ -67,13 +70,13 @@ class ManualHCTreeFixture : public ::testing::Test {
 
 TEST_F(SimpleHCTreeFixture, TEST_ENCODE_GOOD_QUERY) {
     ostringstream os;
-    tree.encode('a', os);
-    ASSERT_EQ(os.str(), "");
+    tree.encode('C', os);
+    ASSERT_EQ(os.str(), "101");
 }
 
 TEST_F(SimpleHCTreeFixture, TEST_ENCODE_BAD_QUERY) {
     ostringstream os;
-    tree.encode('a', os);
+    tree.encode('F', os);
     ASSERT_EQ(os.str(), "");
 }
 
@@ -102,7 +105,7 @@ TEST_F(SimpleHCTreeFixture, TEST_BUILD_ALL_ZEROS_FREQ) {
 }
 
 TEST_F(SimpleHCTreeFixture, TEST_DECODE_GOOD_QUERY) {
-    istringstream is("0");
+    istringstream is("100");
     ASSERT_EQ(tree.decode(is), 'A');
 }
 

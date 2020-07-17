@@ -4,6 +4,8 @@
 #include <fstream>
 #include <queue>
 #include <vector>
+#include <stack>
+#include <algorithm>
 // #include "BitInputStream.hpp"
 // #include "BitOutputStream.hpp"
 #include "HCNode.hpp"
