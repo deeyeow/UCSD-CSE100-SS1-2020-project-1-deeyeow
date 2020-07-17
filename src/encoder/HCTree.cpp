@@ -103,7 +103,7 @@ void HCTree::build(const vector<unsigned int>& freqs) {
  * beforehand to create the HCTree.
  */
 
-// struct to find element on a vector of pointers 
+// struct to find element in a vector of pointers 
 struct getSymbol {
     unsigned char symbol;
 
@@ -158,14 +158,13 @@ void HCTree::encode(byte symbol, ostream& out) const {
  */
 byte HCTree::decode(istream& in) const {
     // check if tree has at least 1 node
-    if (root == nullptr) return ' ';
+    if (root == nullptr) return '\0';
 
     unsigned char c;
     HCNode* curr = root;
 
     // keep reading in from stream, until eof
     while (1) {
-        cout << curr->symbol << " ";
         // get next char from stream
         c = (unsigned char)in.get();
         // check not eof
@@ -178,16 +177,10 @@ byte HCTree::decode(istream& in) const {
             curr = curr->c1;
 
         // if leaf node, found letter and return (stops at first leaf node
-        // found, returns ' ' if input too long)
-        if (curr->c0 == nullptr && curr->c1 == nullptr) {
-            in.get();
-            if (in.eof())
-                return curr->symbol;
-            else
-                return ' ';
-        }
+        // found)
+        if (curr->c0 == nullptr && curr->c1 == nullptr) return curr->symbol;
     }
 
     // stream too short, stopped at inner node
-    return ' ';
+    return '\0';
 }

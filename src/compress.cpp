@@ -1,7 +1,7 @@
 /**
  * TODO: file header
  *
- * Author:
+ * Author: Darren Yau
  */
 #include <cxxopts.hpp>
 #include <fstream>
@@ -13,7 +13,45 @@
 
 /* TODO: add pseudo compression with ascii encoding and naive header
  * (checkpoint) */
-void pseudoCompression(const string& inFileName, const string& outFileName) {}
+void pseudoCompression(const string& inFileName, const string& outFileName) {
+    ifstream in(inFileName, ios::binary);
+    ofstream out;
+
+    unsigned char c;
+
+    // check if file opened successfully
+    if (in.is_open()) {
+        // construct huffman tree
+        HCTree tree;
+        vector<unsigned int> freqs(256);
+        while (1) {
+            c = in.get();
+            if (in.eof()) break;
+            freqs[c]++;
+        }
+        tree.build(freqs);
+
+        // build outfile header
+        out.open(outFileName);
+        for (int i = 0; i < 256; i++) {
+            out << freqs[i] << endl;
+        }
+
+        // reset "get" pointer to beginning of infile
+        in.clear();
+        in.seekg(0, ios::beg);
+
+        // start compression
+        while (1) {
+            c = in.get();
+            if (in.eof()) break;
+            tree.encode(c, out);
+        }
+
+        in.close();
+        out.close();
+    }
+}
 
 /* TODO: True compression with bitwise i/o and small header (final) */
 void trueCompression(const string& inFileName, const string& outFileName) {}

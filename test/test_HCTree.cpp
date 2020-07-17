@@ -68,6 +68,24 @@ class ManualHCTreeFixture : public ::testing::Test {
     }
 };
 
+TEST_F(SimpleHCTreeFixture, TEST_BUILD_NULL_FREQ) {
+    vector<unsigned int> tempFreqs(256);
+    HCTree tempTree;
+    tempTree.build(tempFreqs);
+    istringstream is("001");
+    ASSERT_EQ(tempTree.decode(is), '\0');
+}
+
+TEST_F(SimpleHCTreeFixture, TEST_BUILD_ALL_ZEROS_FREQ) {
+    vector<unsigned int> tempFreqs(256);
+    tempFreqs['A'] = 0;
+    tempFreqs['B'] = 0;
+    HCTree tempTree;
+    tempTree.build(tempFreqs);
+    istringstream is("001");
+    ASSERT_EQ(tempTree.decode(is), '\0');
+}
+
 TEST_F(SimpleHCTreeFixture, TEST_ENCODE_GOOD_QUERY) {
     ostringstream os;
     tree.encode('C', os);
@@ -80,35 +98,6 @@ TEST_F(SimpleHCTreeFixture, TEST_ENCODE_BAD_QUERY) {
     ASSERT_EQ(os.str(), "");
 }
 
-TEST_F(SimpleHCTreeFixture, TEST_DELETE_HCNODE) {
-    HCNode* root1 = new HCNode(1, 0);
-    HCTree::deleteHCNode(root1);
-    ASSERT_EQ(root1->count, NULL);
-}
-
-TEST_F(SimpleHCTreeFixture, TEST_BUILD_NULL_FREQ) {
-    vector<unsigned int> tempFreqs(256);
-    HCTree tempTree;
-    tempTree.build(tempFreqs);
-    istringstream is("001");
-    ASSERT_EQ(tempTree.decode(is), ' ');
-}
-
-TEST_F(SimpleHCTreeFixture, TEST_BUILD_ALL_ZEROS_FREQ) {
-    vector<unsigned int> tempFreqs(256);
-    tempFreqs['A'] = 0;
-    tempFreqs['B'] = 0;
-    HCTree tempTree;
-    tempTree.build(tempFreqs);
-    istringstream is("001");
-    ASSERT_EQ(tempTree.decode(is), ' ');
-}
-
-TEST_F(SimpleHCTreeFixture, TEST_DECODE_GOOD_QUERY) {
-    istringstream is("100");
-    ASSERT_EQ(tree.decode(is), 'A');
-}
-
 TEST_F(ManualHCTreeFixture, TEST_DECODE_NO_BUILD_GOOD_QUERY) {
     // test stream
     istringstream is("00");
@@ -119,10 +108,34 @@ TEST_F(ManualHCTreeFixture, TEST_DECODE_NO_BUILD_GOOD_QUERY) {
 
 TEST_F(ManualHCTreeFixture, TEST_DECODE_NO_BUILD_BAD_QUERY_SHORT) {
     istringstream is("1");
-    ASSERT_EQ(tree->decode(is), ' ');
+    ASSERT_EQ(tree->decode(is), '\0');
 }
 
-TEST_F(ManualHCTreeFixture, TEST_DECODE_NO_BUILD_BAD_QUERY_LONG) {
+/* removed feature to test if input stream was longer than allowed in Huffman
+Tree TEST_F(ManualHCTreeFixture, TEST_DECODE_NO_BUILD_BAD_QUERY_LONG) {
     istringstream is("111");
-    ASSERT_EQ(tree->decode(is), ' ');
+    ASSERT_EQ(tree->decode(is), '\0');
+}
+*/
+
+TEST_F(SimpleHCTreeFixture, TEST_DECODE_GOOD_QUERY) {
+    istringstream is("100");
+    ASSERT_EQ(tree.decode(is), 'A');
+}
+
+TEST_F(SimpleHCTreeFixture, TEST_DECODE_BAD_QUERY_SHORT) {
+    istringstream is("10");
+    ASSERT_EQ(tree.decode(is), '\0');
+}
+
+/* removed feature to test if input stream was longer than allowed in Huffman
+Tree TEST_F(SimpleHCTreeFixture, TEST_DECODE_BAD_QUERY_LONG) { istringstream
+is("111"); ASSERT_EQ(tree.decode(is), '\0');
+}
+*/
+
+TEST_F(SimpleHCTreeFixture, TEST_DELETE_NODE) {
+    HCNode* root1 = new HCNode(1, 0);
+    HCTree::deleteHCNode(root1);
+    ASSERT_EQ(root1->count, NULL);
 }

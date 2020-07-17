@@ -1,7 +1,7 @@
 /**
  * TODO: file header
  *
- * Author:
+ * Author: Darren Yau
  */
 #include <cxxopts.hpp>
 #include <fstream>
@@ -13,7 +13,49 @@
 
 /* TODO: Pseudo decompression with ascii encoding and naive header (checkpoint)
  */
-void pseudoDecompression(const string& inFileName, const string& outFileName) {}
+void pseudoDecompression(const string& inFileName, const string& outFileName) {
+    ifstream in(inFileName, ios::binary);
+    ofstream out;
+    string tempFile = "temp.txt";
+
+    string str;
+    unsigned char c;
+
+    // check if file opened successfully
+    if (in.is_open()) {
+        // construct huffman tree
+        HCTree tree;
+        vector<unsigned int> freqs(256);
+
+        // go thru each line in header section
+        for (int i = 0; i < 256; i++) {
+            // read in each number
+            while (1) {
+                c = in.get();
+                if (c == '\n') break;
+                str += c;
+            }
+            // update freqs vector
+            freqs[i] = stoi(str);
+            str = "";
+        }
+        tree.build(freqs);
+
+        // start uncompression
+        out.open(tempFile);
+        while (!in.eof()) {
+            c = tree.decode(in);
+            // don't output last garbage value
+            if (c == '\0')
+                break;
+            else
+                out << c;
+        }
+
+        in.close();
+        out.close();
+    }
+}
 
 /* TODO: True decompression with bitwise i/o and small header (final) */
 void trueDecompression(const string& inFileName, const string& outFileName) {}
