@@ -16,7 +16,6 @@
 void pseudoDecompression(const string& inFileName, const string& outFileName) {
     ifstream in(inFileName, ios::binary);
     ofstream out;
-    string tempFile = "temp.txt";
 
     string str;
     unsigned char c;
@@ -42,7 +41,7 @@ void pseudoDecompression(const string& inFileName, const string& outFileName) {
         tree.build(freqs);
 
         // start uncompression
-        out.open(tempFile);
+        out.open(outFileName);
         while (!in.eof()) {
             c = tree.decode(in);
             // don't output last garbage value
