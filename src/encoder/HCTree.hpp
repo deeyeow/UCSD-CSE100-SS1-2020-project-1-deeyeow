@@ -142,7 +142,7 @@ class HCTree {
     int leaderboard_helper_98(vector<int>& arr, int i);
     int leaderboard_helper_99(vector<int>& arr, int i);
     int leaderboard_helper_100(vector<int>& arr, int i);
-    
+
     int leaderboard_helperr_1(vector<int>& arr, int i);
     int leaderboard_helperr_2(vector<int>& arr, int i);
     int leaderboard_helperr_3(vector<int>& arr, int i);
