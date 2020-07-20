@@ -48,9 +48,15 @@ void HCTree::build(const vector<unsigned int>& freqs) {
 
     // account for when freqs vector only has 1 entry (can't set root to have a value)
     if (pq.size() == 1) {
-        root = new HCNode(pq.top()->count, pq.top()->symbol);
-        root->c0 = pq.top();
+        HCNode* node = pq.top();
+        root = new HCNode(node->count, node->symbol);
+
+        root->c0 = node;
         root->c1 = nullptr;
+
+        leaves->at(node->symbol) = node;
+        node->p = root;
+        
         return;
     }
 
