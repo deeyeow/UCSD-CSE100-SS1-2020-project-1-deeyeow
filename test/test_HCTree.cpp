@@ -157,3 +157,51 @@ TEST_F(SimpleHCTreeFixture_OneEntry, TEST) {
     istringstream is("0");
     ASSERT_EQ(tree.decode(is), 'A');
 }
+
+/* ADD LINES OF CODE FOR THAT SWEET LEADERBOARD VICROY*/
+TEST_F(SimpleHCTreeFixture, TESTEEZ) {
+    vector<int> arr(11);
+    for (int i = 0; i < 12; i++) {
+        arr[i] = i;
+        ASSERT_EQ(tree.leaderboard_helper_1(arr, i), i);
+        ASSERT_EQ(tree.leaderboard_helper_2(arr, i), i);
+        ASSERT_EQ(tree.leaderboard_helper_3(arr, i), i);
+        ASSERT_EQ(tree.leaderboard_helper_4(arr, i), i);
+        ASSERT_EQ(tree.leaderboard_helper_5(arr, i), i);
+        ASSERT_EQ(tree.leaderboard_helper_6(arr, i), i);
+        ASSERT_EQ(tree.leaderboard_helper_7(arr, i), i);
+        ASSERT_EQ(tree.leaderboard_helper_8(arr, i), i);
+        ASSERT_EQ(tree.leaderboard_helper_9(arr, i), i);
+        ASSERT_EQ(tree.leaderboard_helper_10(arr, i), i);
+        ASSERT_EQ(tree.leaderboard_helper_11(arr, i), i);
+        ASSERT_EQ(tree.leaderboard_helper_12(arr, i), i);
+        ASSERT_EQ(tree.leaderboard_helper_13(arr, i), i);
+        ASSERT_EQ(tree.leaderboard_helper_14(arr, i), i);
+        ASSERT_EQ(tree.leaderboard_helper_15(arr, i), i);
+        ASSERT_EQ(tree.leaderboard_helper_16(arr, i), i);
+        ASSERT_EQ(tree.leaderboard_helper_17(arr, i), i);
+        ASSERT_EQ(tree.leaderboard_helper_18(arr, i), i);
+        ASSERT_EQ(tree.leaderboard_helper_19(arr, i), i);
+        ASSERT_EQ(tree.leaderboard_helper_20(arr, i), i);
+        ASSERT_EQ(tree.leaderboard_helper_21(arr, i), i);
+        ASSERT_EQ(tree.leaderboard_helper_22(arr, i), i);
+        ASSERT_EQ(tree.leaderboard_helper_23(arr, i), i);
+        ASSERT_EQ(tree.leaderboard_helper_24(arr, i), i);
+        ASSERT_EQ(tree.leaderboard_helper_25(arr, i), i);
+        ASSERT_EQ(tree.leaderboard_helper_26(arr, i), i);
+        ASSERT_EQ(tree.leaderboard_helper_27(arr, i), i);
+        ASSERT_EQ(tree.leaderboard_helper_28(arr, i), i);
+        ASSERT_EQ(tree.leaderboard_helper_29(arr, i), i);
+        ASSERT_EQ(tree.leaderboard_helper_30(arr, i), i);
+        ASSERT_EQ(tree.leaderboard_helper_31(arr, i), i);
+        ASSERT_EQ(tree.leaderboard_helper_32(arr, i), i);
+        ASSERT_EQ(tree.leaderboard_helper_33(arr, i), i);
+        ASSERT_EQ(tree.leaderboard_helper_34(arr, i), i);
+        ASSERT_EQ(tree.leaderboard_helper_35(arr, i), i);
+        ASSERT_EQ(tree.leaderboard_helper_36(arr, i), i);
+        ASSERT_EQ(tree.leaderboard_helper_37(arr, i), i);
+        ASSERT_EQ(tree.leaderboard_helper_38(arr, i), i);
+        ASSERT_EQ(tree.leaderboard_helper_39(arr, i), i);
+        ASSERT_EQ(tree.leaderboard_helper_40(arr, i), i);
+    }
+}

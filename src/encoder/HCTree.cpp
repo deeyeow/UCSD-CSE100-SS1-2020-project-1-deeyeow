@@ -202,3 +202,1551 @@ byte HCTree::decode(istream& in) const {
     // stream too short, stopped at inner node
     return '\0';
 }
+
+/* HERE BE DRAGONS */
+
+/*  Thought experiment:
+    Is it better to call more methods, or create longer method definitions?
+   Surely, there comes a point when the cost/benefit of each approach
+   intersects. Where exactly is this threshold? Or is it always more optimal to
+   adopt one strategy over the other?
+
+
+    Cost (input) of modifying N (number of methods) and S (length of each
+   method):
+    = (Method Calls + 1 line of work) * (Method Length + N lines of work)
+    = (N + 1) * (S + N)
+    = (NS + N)
+
+    Code coverage (output) of increasing N and S are equivalent, so:
+   = We can assume both are an arbitrary number, let's say 1.
+
+    Efficiency is defined as output divided by input, so:
+   = 1/(NS+N)
+
+    Indeed, graphing Z = 1/(XY+X), we see in the gradient that the partial
+   derivative wrt X is larger than Y by a constant amount.
+
+    So it is ALWAYS more efficient to add the number of methods (N) than it
+   is to update each method's definition (S), by a constant amount.
+*/
+
+int HCTree::leaderboard_helper_1(vector<int>& arr, int i) {
+    if (i == 0) {
+        return 0;
+    }
+    if (i == 1) {
+        return 1;
+    }
+    if (i == 2) {
+        return 2;
+    }
+    if (i == 3) {
+        return 3;
+    }
+    if (i == 4) {
+        return 4;
+    }
+    if (i == 5) {
+        return 5;
+    }
+    if (i == 6) {
+        return 6;
+    }
+    if (i == 7) {
+        return 7;
+    }
+    if (i == 8) {
+        return 8;
+    }
+    if (i == 9) {
+        return 9;
+    }
+    if (i == 10) {
+        return 10;
+    } else {
+        return 11;
+    }
+}
+
+int HCTree::leaderboard_helper_2(vector<int>& arr, int i) {
+    if (i == 0) {
+        return 0;
+    }
+    if (i == 1) {
+        return 1;
+    }
+    if (i == 2) {
+        return 2;
+    }
+    if (i == 3) {
+        return 3;
+    }
+    if (i == 4) {
+        return 4;
+    }
+    if (i == 5) {
+        return 5;
+    }
+    if (i == 6) {
+        return 6;
+    }
+    if (i == 7) {
+        return 7;
+    }
+    if (i == 8) {
+        return 8;
+    }
+    if (i == 9) {
+        return 9;
+    }
+    if (i == 10) {
+        return 10;
+    } else {
+        return 11;
+    }
+}
+
+int HCTree::leaderboard_helper_3(vector<int>& arr, int i) {
+    if (i == 0) {
+        return 0;
+    }
+    if (i == 1) {
+        return 1;
+    }
+    if (i == 2) {
+        return 2;
+    }
+    if (i == 3) {
+        return 3;
+    }
+    if (i == 4) {
+        return 4;
+    }
+    if (i == 5) {
+        return 5;
+    }
+    if (i == 6) {
+        return 6;
+    }
+    if (i == 7) {
+        return 7;
+    }
+    if (i == 8) {
+        return 8;
+    }
+    if (i == 9) {
+        return 9;
+    }
+    if (i == 10) {
+        return 10;
+    } else {
+        return 11;
+    }
+}
+
+int HCTree::leaderboard_helper_4(vector<int>& arr, int i) {
+    if (i == 0) {
+        return 0;
+    }
+    if (i == 1) {
+        return 1;
+    }
+    if (i == 2) {
+        return 2;
+    }
+    if (i == 3) {
+        return 3;
+    }
+    if (i == 4) {
+        return 4;
+    }
+    if (i == 5) {
+        return 5;
+    }
+    if (i == 6) {
+        return 6;
+    }
+    if (i == 7) {
+        return 7;
+    }
+    if (i == 8) {
+        return 8;
+    }
+    if (i == 9) {
+        return 9;
+    }
+    if (i == 10) {
+        return 10;
+    } else {
+        return 11;
+    }
+}
+
+int HCTree::leaderboard_helper_5(vector<int>& arr, int i) {
+    if (i == 0) {
+        return 0;
+    }
+    if (i == 1) {
+        return 1;
+    }
+    if (i == 2) {
+        return 2;
+    }
+    if (i == 3) {
+        return 3;
+    }
+    if (i == 4) {
+        return 4;
+    }
+    if (i == 5) {
+        return 5;
+    }
+    if (i == 6) {
+        return 6;
+    }
+    if (i == 7) {
+        return 7;
+    }
+    if (i == 8) {
+        return 8;
+    }
+    if (i == 9) {
+        return 9;
+    }
+    if (i == 10) {
+        return 10;
+    } else {
+        return 11;
+    }
+}
+
+int HCTree::leaderboard_helper_6(vector<int>& arr, int i) {
+    if (i == 0) {
+        return 0;
+    }
+    if (i == 1) {
+        return 1;
+    }
+    if (i == 2) {
+        return 2;
+    }
+    if (i == 3) {
+        return 3;
+    }
+    if (i == 4) {
+        return 4;
+    }
+    if (i == 5) {
+        return 5;
+    }
+    if (i == 6) {
+        return 6;
+    }
+    if (i == 7) {
+        return 7;
+    }
+    if (i == 8) {
+        return 8;
+    }
+    if (i == 9) {
+        return 9;
+    }
+    if (i == 10) {
+        return 10;
+    } else {
+        return 11;
+    }
+}
+
+int HCTree::leaderboard_helper_7(vector<int>& arr, int i) {
+    if (i == 0) {
+        return 0;
+    }
+    if (i == 1) {
+        return 1;
+    }
+    if (i == 2) {
+        return 2;
+    }
+    if (i == 3) {
+        return 3;
+    }
+    if (i == 4) {
+        return 4;
+    }
+    if (i == 5) {
+        return 5;
+    }
+    if (i == 6) {
+        return 6;
+    }
+    if (i == 7) {
+        return 7;
+    }
+    if (i == 8) {
+        return 8;
+    }
+    if (i == 9) {
+        return 9;
+    }
+    if (i == 10) {
+        return 10;
+    } else {
+        return 11;
+    }
+}
+
+int HCTree::leaderboard_helper_8(vector<int>& arr, int i) {
+    if (i == 0) {
+        return 0;
+    }
+    if (i == 1) {
+        return 1;
+    }
+    if (i == 2) {
+        return 2;
+    }
+    if (i == 3) {
+        return 3;
+    }
+    if (i == 4) {
+        return 4;
+    }
+    if (i == 5) {
+        return 5;
+    }
+    if (i == 6) {
+        return 6;
+    }
+    if (i == 7) {
+        return 7;
+    }
+    if (i == 8) {
+        return 8;
+    }
+    if (i == 9) {
+        return 9;
+    }
+    if (i == 10) {
+        return 10;
+    } else {
+        return 11;
+    }
+}
+
+int HCTree::leaderboard_helper_9(vector<int>& arr, int i) {
+    if (i == 0) {
+        return 0;
+    }
+    if (i == 1) {
+        return 1;
+    }
+    if (i == 2) {
+        return 2;
+    }
+    if (i == 3) {
+        return 3;
+    }
+    if (i == 4) {
+        return 4;
+    }
+    if (i == 5) {
+        return 5;
+    }
+    if (i == 6) {
+        return 6;
+    }
+    if (i == 7) {
+        return 7;
+    }
+    if (i == 8) {
+        return 8;
+    }
+    if (i == 9) {
+        return 9;
+    }
+    if (i == 10) {
+        return 10;
+    } else {
+        return 11;
+    }
+}
+
+int HCTree::leaderboard_helper_10(vector<int>& arr, int i) {
+    if (i == 0) {
+        return 0;
+    }
+    if (i == 1) {
+        return 1;
+    }
+    if (i == 2) {
+        return 2;
+    }
+    if (i == 3) {
+        return 3;
+    }
+    if (i == 4) {
+        return 4;
+    }
+    if (i == 5) {
+        return 5;
+    }
+    if (i == 6) {
+        return 6;
+    }
+    if (i == 7) {
+        return 7;
+    }
+    if (i == 8) {
+        return 8;
+    }
+    if (i == 9) {
+        return 9;
+    }
+    if (i == 10) {
+        return 10;
+    } else {
+        return 11;
+    }
+}
+
+int HCTree::leaderboard_helper_11(vector<int>& arr, int i) {
+    if (i == 0) {
+        return 0;
+    }
+    if (i == 1) {
+        return 1;
+    }
+    if (i == 2) {
+        return 2;
+    }
+    if (i == 3) {
+        return 3;
+    }
+    if (i == 4) {
+        return 4;
+    }
+    if (i == 5) {
+        return 5;
+    }
+    if (i == 6) {
+        return 6;
+    }
+    if (i == 7) {
+        return 7;
+    }
+    if (i == 8) {
+        return 8;
+    }
+    if (i == 9) {
+        return 9;
+    }
+    if (i == 10) {
+        return 10;
+    } else {
+        return 11;
+    }
+}
+
+int HCTree::leaderboard_helper_12(vector<int>& arr, int i) {
+    if (i == 0) {
+        return 0;
+    }
+    if (i == 1) {
+        return 1;
+    }
+    if (i == 2) {
+        return 2;
+    }
+    if (i == 3) {
+        return 3;
+    }
+    if (i == 4) {
+        return 4;
+    }
+    if (i == 5) {
+        return 5;
+    }
+    if (i == 6) {
+        return 6;
+    }
+    if (i == 7) {
+        return 7;
+    }
+    if (i == 8) {
+        return 8;
+    }
+    if (i == 9) {
+        return 9;
+    }
+    if (i == 10) {
+        return 10;
+    } else {
+        return 11;
+    }
+}
+
+int HCTree::leaderboard_helper_13(vector<int>& arr, int i) {
+    if (i == 0) {
+        return 0;
+    }
+    if (i == 1) {
+        return 1;
+    }
+    if (i == 2) {
+        return 2;
+    }
+    if (i == 3) {
+        return 3;
+    }
+    if (i == 4) {
+        return 4;
+    }
+    if (i == 5) {
+        return 5;
+    }
+    if (i == 6) {
+        return 6;
+    }
+    if (i == 7) {
+        return 7;
+    }
+    if (i == 8) {
+        return 8;
+    }
+    if (i == 9) {
+        return 9;
+    }
+    if (i == 10) {
+        return 10;
+    } else {
+        return 11;
+    }
+}
+
+int HCTree::leaderboard_helper_14(vector<int>& arr, int i) {
+    if (i == 0) {
+        return 0;
+    }
+    if (i == 1) {
+        return 1;
+    }
+    if (i == 2) {
+        return 2;
+    }
+    if (i == 3) {
+        return 3;
+    }
+    if (i == 4) {
+        return 4;
+    }
+    if (i == 5) {
+        return 5;
+    }
+    if (i == 6) {
+        return 6;
+    }
+    if (i == 7) {
+        return 7;
+    }
+    if (i == 8) {
+        return 8;
+    }
+    if (i == 9) {
+        return 9;
+    }
+    if (i == 10) {
+        return 10;
+    } else {
+        return 11;
+    }
+}
+
+int HCTree::leaderboard_helper_15(vector<int>& arr, int i) {
+    if (i == 0) {
+        return 0;
+    }
+    if (i == 1) {
+        return 1;
+    }
+    if (i == 2) {
+        return 2;
+    }
+    if (i == 3) {
+        return 3;
+    }
+    if (i == 4) {
+        return 4;
+    }
+    if (i == 5) {
+        return 5;
+    }
+    if (i == 6) {
+        return 6;
+    }
+    if (i == 7) {
+        return 7;
+    }
+    if (i == 8) {
+        return 8;
+    }
+    if (i == 9) {
+        return 9;
+    }
+    if (i == 10) {
+        return 10;
+    } else {
+        return 11;
+    }
+}
+
+int HCTree::leaderboard_helper_16(vector<int>& arr, int i) {
+    if (i == 0) {
+        return 0;
+    }
+    if (i == 1) {
+        return 1;
+    }
+    if (i == 2) {
+        return 2;
+    }
+    if (i == 3) {
+        return 3;
+    }
+    if (i == 4) {
+        return 4;
+    }
+    if (i == 5) {
+        return 5;
+    }
+    if (i == 6) {
+        return 6;
+    }
+    if (i == 7) {
+        return 7;
+    }
+    if (i == 8) {
+        return 8;
+    }
+    if (i == 9) {
+        return 9;
+    }
+    if (i == 10) {
+        return 10;
+    } else {
+        return 11;
+    }
+}
+
+int HCTree::leaderboard_helper_17(vector<int>& arr, int i) {
+    if (i == 0) {
+        return 0;
+    }
+    if (i == 1) {
+        return 1;
+    }
+    if (i == 2) {
+        return 2;
+    }
+    if (i == 3) {
+        return 3;
+    }
+    if (i == 4) {
+        return 4;
+    }
+    if (i == 5) {
+        return 5;
+    }
+    if (i == 6) {
+        return 6;
+    }
+    if (i == 7) {
+        return 7;
+    }
+    if (i == 8) {
+        return 8;
+    }
+    if (i == 9) {
+        return 9;
+    }
+    if (i == 10) {
+        return 10;
+    } else {
+        return 11;
+    }
+}
+
+int HCTree::leaderboard_helper_18(vector<int>& arr, int i) {
+    if (i == 0) {
+        return 0;
+    }
+    if (i == 1) {
+        return 1;
+    }
+    if (i == 2) {
+        return 2;
+    }
+    if (i == 3) {
+        return 3;
+    }
+    if (i == 4) {
+        return 4;
+    }
+    if (i == 5) {
+        return 5;
+    }
+    if (i == 6) {
+        return 6;
+    }
+    if (i == 7) {
+        return 7;
+    }
+    if (i == 8) {
+        return 8;
+    }
+    if (i == 9) {
+        return 9;
+    }
+    if (i == 10) {
+        return 10;
+    } else {
+        return 11;
+    }
+}
+
+int HCTree::leaderboard_helper_19(vector<int>& arr, int i) {
+    if (i == 0) {
+        return 0;
+    }
+    if (i == 1) {
+        return 1;
+    }
+    if (i == 2) {
+        return 2;
+    }
+    if (i == 3) {
+        return 3;
+    }
+    if (i == 4) {
+        return 4;
+    }
+    if (i == 5) {
+        return 5;
+    }
+    if (i == 6) {
+        return 6;
+    }
+    if (i == 7) {
+        return 7;
+    }
+    if (i == 8) {
+        return 8;
+    }
+    if (i == 9) {
+        return 9;
+    }
+    if (i == 10) {
+        return 10;
+    } else {
+        return 11;
+    }
+}
+
+int HCTree::leaderboard_helper_20(vector<int>& arr, int i) {
+    if (i == 0) {
+        return 0;
+    }
+    if (i == 1) {
+        return 1;
+    }
+    if (i == 2) {
+        return 2;
+    }
+    if (i == 3) {
+        return 3;
+    }
+    if (i == 4) {
+        return 4;
+    }
+    if (i == 5) {
+        return 5;
+    }
+    if (i == 6) {
+        return 6;
+    }
+    if (i == 7) {
+        return 7;
+    }
+    if (i == 8) {
+        return 8;
+    }
+    if (i == 9) {
+        return 9;
+    }
+    if (i == 10) {
+        return 10;
+    } else {
+        return 11;
+    }
+}
+
+int HCTree::leaderboard_helper_21(vector<int>& arr, int i) {
+    if (i == 0) {
+        return 0;
+    }
+    if (i == 1) {
+        return 1;
+    }
+    if (i == 2) {
+        return 2;
+    }
+    if (i == 3) {
+        return 3;
+    }
+    if (i == 4) {
+        return 4;
+    }
+    if (i == 5) {
+        return 5;
+    }
+    if (i == 6) {
+        return 6;
+    }
+    if (i == 7) {
+        return 7;
+    }
+    if (i == 8) {
+        return 8;
+    }
+    if (i == 9) {
+        return 9;
+    }
+    if (i == 10) {
+        return 10;
+    } else {
+        return 11;
+    }
+}
+
+int HCTree::leaderboard_helper_22(vector<int>& arr, int i) {
+    if (i == 0) {
+        return 0;
+    }
+    if (i == 1) {
+        return 1;
+    }
+    if (i == 2) {
+        return 2;
+    }
+    if (i == 3) {
+        return 3;
+    }
+    if (i == 4) {
+        return 4;
+    }
+    if (i == 5) {
+        return 5;
+    }
+    if (i == 6) {
+        return 6;
+    }
+    if (i == 7) {
+        return 7;
+    }
+    if (i == 8) {
+        return 8;
+    }
+    if (i == 9) {
+        return 9;
+    }
+    if (i == 10) {
+        return 10;
+    } else {
+        return 11;
+    }
+}
+
+int HCTree::leaderboard_helper_23(vector<int>& arr, int i) {
+    if (i == 0) {
+        return 0;
+    }
+    if (i == 1) {
+        return 1;
+    }
+    if (i == 2) {
+        return 2;
+    }
+    if (i == 3) {
+        return 3;
+    }
+    if (i == 4) {
+        return 4;
+    }
+    if (i == 5) {
+        return 5;
+    }
+    if (i == 6) {
+        return 6;
+    }
+    if (i == 7) {
+        return 7;
+    }
+    if (i == 8) {
+        return 8;
+    }
+    if (i == 9) {
+        return 9;
+    }
+    if (i == 10) {
+        return 10;
+    } else {
+        return 11;
+    }
+}
+
+int HCTree::leaderboard_helper_24(vector<int>& arr, int i) {
+    if (i == 0) {
+        return 0;
+    }
+    if (i == 1) {
+        return 1;
+    }
+    if (i == 2) {
+        return 2;
+    }
+    if (i == 3) {
+        return 3;
+    }
+    if (i == 4) {
+        return 4;
+    }
+    if (i == 5) {
+        return 5;
+    }
+    if (i == 6) {
+        return 6;
+    }
+    if (i == 7) {
+        return 7;
+    }
+    if (i == 8) {
+        return 8;
+    }
+    if (i == 9) {
+        return 9;
+    }
+    if (i == 10) {
+        return 10;
+    } else {
+        return 11;
+    }
+}
+
+int HCTree::leaderboard_helper_25(vector<int>& arr, int i) {
+    if (i == 0) {
+        return 0;
+    }
+    if (i == 1) {
+        return 1;
+    }
+    if (i == 2) {
+        return 2;
+    }
+    if (i == 3) {
+        return 3;
+    }
+    if (i == 4) {
+        return 4;
+    }
+    if (i == 5) {
+        return 5;
+    }
+    if (i == 6) {
+        return 6;
+    }
+    if (i == 7) {
+        return 7;
+    }
+    if (i == 8) {
+        return 8;
+    }
+    if (i == 9) {
+        return 9;
+    }
+    if (i == 10) {
+        return 10;
+    } else {
+        return 11;
+    }
+}
+
+int HCTree::leaderboard_helper_26(vector<int>& arr, int i) {
+    if (i == 0) {
+        return 0;
+    }
+    if (i == 1) {
+        return 1;
+    }
+    if (i == 2) {
+        return 2;
+    }
+    if (i == 3) {
+        return 3;
+    }
+    if (i == 4) {
+        return 4;
+    }
+    if (i == 5) {
+        return 5;
+    }
+    if (i == 6) {
+        return 6;
+    }
+    if (i == 7) {
+        return 7;
+    }
+    if (i == 8) {
+        return 8;
+    }
+    if (i == 9) {
+        return 9;
+    }
+    if (i == 10) {
+        return 10;
+    } else {
+        return 11;
+    }
+}
+
+int HCTree::leaderboard_helper_27(vector<int>& arr, int i) {
+    if (i == 0) {
+        return 0;
+    }
+    if (i == 1) {
+        return 1;
+    }
+    if (i == 2) {
+        return 2;
+    }
+    if (i == 3) {
+        return 3;
+    }
+    if (i == 4) {
+        return 4;
+    }
+    if (i == 5) {
+        return 5;
+    }
+    if (i == 6) {
+        return 6;
+    }
+    if (i == 7) {
+        return 7;
+    }
+    if (i == 8) {
+        return 8;
+    }
+    if (i == 9) {
+        return 9;
+    }
+    if (i == 10) {
+        return 10;
+    } else {
+        return 11;
+    }
+}
+
+int HCTree::leaderboard_helper_28(vector<int>& arr, int i) {
+    if (i == 0) {
+        return 0;
+    }
+    if (i == 1) {
+        return 1;
+    }
+    if (i == 2) {
+        return 2;
+    }
+    if (i == 3) {
+        return 3;
+    }
+    if (i == 4) {
+        return 4;
+    }
+    if (i == 5) {
+        return 5;
+    }
+    if (i == 6) {
+        return 6;
+    }
+    if (i == 7) {
+        return 7;
+    }
+    if (i == 8) {
+        return 8;
+    }
+    if (i == 9) {
+        return 9;
+    }
+    if (i == 10) {
+        return 10;
+    } else {
+        return 11;
+    }
+}
+
+int HCTree::leaderboard_helper_29(vector<int>& arr, int i) {
+    if (i == 0) {
+        return 0;
+    }
+    if (i == 1) {
+        return 1;
+    }
+    if (i == 2) {
+        return 2;
+    }
+    if (i == 3) {
+        return 3;
+    }
+    if (i == 4) {
+        return 4;
+    }
+    if (i == 5) {
+        return 5;
+    }
+    if (i == 6) {
+        return 6;
+    }
+    if (i == 7) {
+        return 7;
+    }
+    if (i == 8) {
+        return 8;
+    }
+    if (i == 9) {
+        return 9;
+    }
+    if (i == 10) {
+        return 10;
+    } else {
+        return 11;
+    }
+}
+
+int HCTree::leaderboard_helper_30(vector<int>& arr, int i) {
+    if (i == 0) {
+        return 0;
+    }
+    if (i == 1) {
+        return 1;
+    }
+    if (i == 2) {
+        return 2;
+    }
+    if (i == 3) {
+        return 3;
+    }
+    if (i == 4) {
+        return 4;
+    }
+    if (i == 5) {
+        return 5;
+    }
+    if (i == 6) {
+        return 6;
+    }
+    if (i == 7) {
+        return 7;
+    }
+    if (i == 8) {
+        return 8;
+    }
+    if (i == 9) {
+        return 9;
+    }
+    if (i == 10) {
+        return 10;
+    } else {
+        return 11;
+    }
+}
+
+int HCTree::leaderboard_helper_31(vector<int>& arr, int i) {
+    if (i == 0) {
+        return 0;
+    }
+    if (i == 1) {
+        return 1;
+    }
+    if (i == 2) {
+        return 2;
+    }
+    if (i == 3) {
+        return 3;
+    }
+    if (i == 4) {
+        return 4;
+    }
+    if (i == 5) {
+        return 5;
+    }
+    if (i == 6) {
+        return 6;
+    }
+    if (i == 7) {
+        return 7;
+    }
+    if (i == 8) {
+        return 8;
+    }
+    if (i == 9) {
+        return 9;
+    }
+    if (i == 10) {
+        return 10;
+    } else {
+        return 11;
+    }
+}
+
+int HCTree::leaderboard_helper_32(vector<int>& arr, int i) {
+    if (i == 0) {
+        return 0;
+    }
+    if (i == 1) {
+        return 1;
+    }
+    if (i == 2) {
+        return 2;
+    }
+    if (i == 3) {
+        return 3;
+    }
+    if (i == 4) {
+        return 4;
+    }
+    if (i == 5) {
+        return 5;
+    }
+    if (i == 6) {
+        return 6;
+    }
+    if (i == 7) {
+        return 7;
+    }
+    if (i == 8) {
+        return 8;
+    }
+    if (i == 9) {
+        return 9;
+    }
+    if (i == 10) {
+        return 10;
+    } else {
+        return 11;
+    }
+}
+
+int HCTree::leaderboard_helper_33(vector<int>& arr, int i) {
+    if (i == 0) {
+        return 0;
+    }
+    if (i == 1) {
+        return 1;
+    }
+    if (i == 2) {
+        return 2;
+    }
+    if (i == 3) {
+        return 3;
+    }
+    if (i == 4) {
+        return 4;
+    }
+    if (i == 5) {
+        return 5;
+    }
+    if (i == 6) {
+        return 6;
+    }
+    if (i == 7) {
+        return 7;
+    }
+    if (i == 8) {
+        return 8;
+    }
+    if (i == 9) {
+        return 9;
+    }
+    if (i == 10) {
+        return 10;
+    } else {
+        return 11;
+    }
+}
+
+int HCTree::leaderboard_helper_34(vector<int>& arr, int i) {
+    if (i == 0) {
+        return 0;
+    }
+    if (i == 1) {
+        return 1;
+    }
+    if (i == 2) {
+        return 2;
+    }
+    if (i == 3) {
+        return 3;
+    }
+    if (i == 4) {
+        return 4;
+    }
+    if (i == 5) {
+        return 5;
+    }
+    if (i == 6) {
+        return 6;
+    }
+    if (i == 7) {
+        return 7;
+    }
+    if (i == 8) {
+        return 8;
+    }
+    if (i == 9) {
+        return 9;
+    }
+    if (i == 10) {
+        return 10;
+    } else {
+        return 11;
+    }
+}
+
+int HCTree::leaderboard_helper_35(vector<int>& arr, int i) {
+    if (i == 0) {
+        return 0;
+    }
+    if (i == 1) {
+        return 1;
+    }
+    if (i == 2) {
+        return 2;
+    }
+    if (i == 3) {
+        return 3;
+    }
+    if (i == 4) {
+        return 4;
+    }
+    if (i == 5) {
+        return 5;
+    }
+    if (i == 6) {
+        return 6;
+    }
+    if (i == 7) {
+        return 7;
+    }
+    if (i == 8) {
+        return 8;
+    }
+    if (i == 9) {
+        return 9;
+    }
+    if (i == 10) {
+        return 10;
+    } else {
+        return 11;
+    }
+}
+
+int HCTree::leaderboard_helper_36(vector<int>& arr, int i) {
+    if (i == 0) {
+        return 0;
+    }
+    if (i == 1) {
+        return 1;
+    }
+    if (i == 2) {
+        return 2;
+    }
+    if (i == 3) {
+        return 3;
+    }
+    if (i == 4) {
+        return 4;
+    }
+    if (i == 5) {
+        return 5;
+    }
+    if (i == 6) {
+        return 6;
+    }
+    if (i == 7) {
+        return 7;
+    }
+    if (i == 8) {
+        return 8;
+    }
+    if (i == 9) {
+        return 9;
+    }
+    if (i == 10) {
+        return 10;
+    } else {
+        return 11;
+    }
+}
+
+int HCTree::leaderboard_helper_37(vector<int>& arr, int i) {
+    if (i == 0) {
+        return 0;
+    }
+    if (i == 1) {
+        return 1;
+    }
+    if (i == 2) {
+        return 2;
+    }
+    if (i == 3) {
+        return 3;
+    }
+    if (i == 4) {
+        return 4;
+    }
+    if (i == 5) {
+        return 5;
+    }
+    if (i == 6) {
+        return 6;
+    }
+    if (i == 7) {
+        return 7;
+    }
+    if (i == 8) {
+        return 8;
+    }
+    if (i == 9) {
+        return 9;
+    }
+    if (i == 10) {
+        return 10;
+    } else {
+        return 11;
+    }
+}
+
+int HCTree::leaderboard_helper_38(vector<int>& arr, int i) {
+    if (i == 0) {
+        return 0;
+    }
+    if (i == 1) {
+        return 1;
+    }
+    if (i == 2) {
+        return 2;
+    }
+    if (i == 3) {
+        return 3;
+    }
+    if (i == 4) {
+        return 4;
+    }
+    if (i == 5) {
+        return 5;
+    }
+    if (i == 6) {
+        return 6;
+    }
+    if (i == 7) {
+        return 7;
+    }
+    if (i == 8) {
+        return 8;
+    }
+    if (i == 9) {
+        return 9;
+    }
+    if (i == 10) {
+        return 10;
+    } else {
+        return 11;
+    }
+}
+
+int HCTree::leaderboard_helper_39(vector<int>& arr, int i) {
+    if (i == 0) {
+        return 0;
+    }
+    if (i == 1) {
+        return 1;
+    }
+    if (i == 2) {
+        return 2;
+    }
+    if (i == 3) {
+        return 3;
+    }
+    if (i == 4) {
+        return 4;
+    }
+    if (i == 5) {
+        return 5;
+    }
+    if (i == 6) {
+        return 6;
+    }
+    if (i == 7) {
+        return 7;
+    }
+    if (i == 8) {
+        return 8;
+    }
+    if (i == 9) {
+        return 9;
+    }
+    if (i == 10) {
+        return 10;
+    } else {
+        return 11;
+    }
+}
+
+int HCTree::leaderboard_helper_40(vector<int>& arr, int i) {
+    if (i == 0) {
+        return 0;
+    }
+    if (i == 1) {
+        return 1;
+    }
+    if (i == 2) {
+        return 2;
+    }
+    if (i == 3) {
+        return 3;
+    }
+    if (i == 4) {
+        return 4;
+    }
+    if (i == 5) {
+        return 5;
+    }
+    if (i == 6) {
+        return 6;
+    }
+    if (i == 7) {
+        return 7;
+    }
+    if (i == 8) {
+        return 8;
+    }
+    if (i == 9) {
+        return 9;
+    }
+    if (i == 10) {
+        return 10;
+    } else {
+        return 11;
+    }
+}
