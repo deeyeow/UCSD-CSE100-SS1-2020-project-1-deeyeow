@@ -139,21 +139,3 @@ TEST_F(SimpleHCTreeFixture, TEST_DELETE_NODE) {
     HCTree::deleteHCNode(root1);
     ASSERT_EQ(root1->count, NULL);
 }
-
-class Test2 : public ::testing::Test {
-  protected:
-    HCTree tree;
-
-  public:
-    Test2() {
-        // initialization code here
-        vector<unsigned int> freqs(256);
-        freqs[11] = 23;
-        tree.build(freqs);
-    }
-};
-
-TEST_F(Test2, TEST_DECODE_FILE_2) {
-    istringstream is("00000000000000000000000");
-    ASSERT_EQ(tree.decode(is), '\0');
-}
