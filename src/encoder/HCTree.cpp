@@ -46,7 +46,8 @@ void HCTree::build(const vector<unsigned int>& freqs) {
     // account for when freqs vector is all 0s
     if (pq.empty()) return;
 
-    // account for when freqs vector only has 1 entry (can't set root to have a value)
+    // account for when freqs vector only has 1 entry (can't set root to have a
+    // value)
     if (pq.size() == 1) {
         HCNode* node = pq.top();
         root = new HCNode(node->count, node->symbol);
@@ -56,7 +57,7 @@ void HCTree::build(const vector<unsigned int>& freqs) {
 
         leaves->at(node->symbol) = node;
         node->p = root;
-        
+
         return;
     }
 
@@ -117,16 +118,17 @@ void HCTree::build(const vector<unsigned int>& freqs) {
  * beforehand to create the HCTree.
  */
 
-// struct to find element in a vector of pointers 
+// struct to find element in a vector of pointers
 struct getSymbol {
     unsigned char symbol;
 
     getSymbol(unsigned char _symbol) : symbol(_symbol) {}
 
-    bool operator()(const HCNode* node) const { 
+    bool operator()(const HCNode* node) const {
         if (node == nullptr) return false;
 
-        return node->symbol == symbol; }
+        return node->symbol == symbol;
+    }
 };
 
 void HCTree::encode(byte symbol, ostream& out) const {
@@ -143,8 +145,10 @@ void HCTree::encode(byte symbol, ostream& out) const {
     stack<unsigned char> stack;
 
     while (curr != nullptr) {
-        if (curr->c0 == prev) stack.push('0');
-        else stack.push('1');
+        if (curr->c0 == prev)
+            stack.push('0');
+        else
+            stack.push('1');
 
         prev = curr;
         curr = curr->p;

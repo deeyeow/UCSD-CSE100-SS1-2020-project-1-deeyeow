@@ -14,9 +14,9 @@ using namespace std;
 
 class BitInputStream {
   private:
-    istream& in;           // reference to the input stream to use
-    byte buf;              // one byte buffer of bits
-    unsigned int nbits;    // number of bits that have been writen to buf
+    istream& in;         // reference to the input stream to use
+    byte buf;            // one byte buffer of bits
+    unsigned int nbits;  // number of bits that have been writen to buf
 
   public:
     // TODO: Initialize member variables.

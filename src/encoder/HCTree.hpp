@@ -1,11 +1,11 @@
 #ifndef HCTREE_HPP
 #define HCTREE_HPP
 
+#include <algorithm>
 #include <fstream>
 #include <queue>
-#include <vector>
 #include <stack>
-#include <algorithm>
+#include <vector>
 // #include "BitInputStream.hpp"
 // #include "BitOutputStream.hpp"
 #include "HCNode.hpp"

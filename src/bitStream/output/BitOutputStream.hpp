@@ -15,9 +15,9 @@ using namespace std;
 /** TODO: class header */
 class BitOutputStream {
   private:
-    ostream& out;           // reference to the output stream to use
-    byte buf;               // one byte buffer of bits
-    unsigned int nbits;     // number of bits have been writen to buf
+    ostream& out;        // reference to the output stream to use
+    byte buf;            // one byte buffer of bits
+    unsigned int nbits;  // number of bits have been writen to buf
 
   public:
     // TODO: Initialize member variables.
