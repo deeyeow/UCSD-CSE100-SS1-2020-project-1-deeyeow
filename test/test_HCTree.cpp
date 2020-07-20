@@ -26,6 +26,19 @@ class SimpleHCTreeFixture : public ::testing::Test {
     }
 };
 
+class SimpleHCTreeFixture_OneEntry : public ::testing::Test {
+  protected:
+    HCTree tree;
+
+  public:
+    SimpleHCTreeFixture_OneEntry() {
+        // initialization code here
+        vector<unsigned int> freqs(256);
+        freqs['A'] = 5;
+        tree.build(freqs);
+    }
+};
+
 class ManualHCTreeFixture : public ::testing::Test {
   protected:
     HCTree* tree;
@@ -138,4 +151,9 @@ TEST_F(SimpleHCTreeFixture, TEST_DELETE_NODE) {
     HCNode* root1 = new HCNode(1, 0);
     HCTree::deleteHCNode(root1);
     ASSERT_EQ(root1->count, NULL);
+}
+
+TEST_F(SimpleHCTreeFixture_OneEntry, TEST) {
+    istringstream is("0");
+    ASSERT_EQ(tree.decode(is), 'A');
 }
