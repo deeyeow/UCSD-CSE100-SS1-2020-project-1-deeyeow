@@ -67,7 +67,7 @@ class ManualHCTreeFixture : public ::testing::Test {
         tree = new HCTree(combine4);
     }
 };
-/*
+
 TEST_F(SimpleHCTreeFixture, TEST_BUILD_NULL_FREQ) {
     vector<unsigned int> tempFreqs(256);
     HCTree tempTree;
@@ -116,7 +116,7 @@ Tree TEST_F(ManualHCTreeFixture, TEST_DECODE_NO_BUILD_BAD_QUERY_LONG) {
     istringstream is("111");
     ASSERT_EQ(tree->decode(is), '\0');
 }
-
+*/
 
 TEST_F(SimpleHCTreeFixture, TEST_DECODE_GOOD_QUERY) {
     istringstream is("100");
@@ -132,14 +132,14 @@ TEST_F(SimpleHCTreeFixture, TEST_DECODE_BAD_QUERY_SHORT) {
 Tree TEST_F(SimpleHCTreeFixture, TEST_DECODE_BAD_QUERY_LONG) { istringstream
 is("111"); ASSERT_EQ(tree.decode(is), '\0');
 }
-
+*/
 
 TEST_F(SimpleHCTreeFixture, TEST_DELETE_NODE) {
     HCNode* root1 = new HCNode(1, 0);
     HCTree::deleteHCNode(root1);
     ASSERT_EQ(root1->count, NULL);
 }
-*/
+
 class Test2 : public ::testing::Test {
   protected:
     HCTree tree;
