@@ -46,6 +46,14 @@ void HCTree::build(const vector<unsigned int>& freqs) {
     // account for when freqs vector is all 0s
     if (pq.empty()) return;
 
+    // account for when freqs vector only has 1 entry (can't set root to have a value)
+    if (pq.size() == 1) {
+        root = new HCNode(pq.top()->count, pq.top()->symbol);
+        root->c0 = pq.top();
+        root->c1 = nullptr;
+        return;
+    }
+
     // organize priority queue using huffman encoding, until only one element
     // left
     while (pq.size() > 1) {

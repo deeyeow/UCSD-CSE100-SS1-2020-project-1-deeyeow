@@ -36,6 +36,7 @@ void pseudoDecompression(const string& inFileName, const string& outFileName) {
             }
             // update freqs vector
             freqs[i] = stoi(str);
+            //cout << (char)i << " count: " << str << endl;
             str = "";
         }
         tree.build(freqs);
