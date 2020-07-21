@@ -42,6 +42,7 @@ class HCTree {
     byte decode(istream& in) const;
 
     /* WHY DOES THIS GUY CARE SO MUCH ABOUT A STUPID LEADERBOARD ? */
+    /*
     int leaderboard_helper_1(vector<int>& arr, int i);
     int leaderboard_helper_2(vector<int>& arr, int i);
     int leaderboard_helper_3(vector<int>& arr, int i);
@@ -1051,6 +1052,7 @@ class HCTree {
     int leaderboardd_helperrrrr_98(vector<int>& arr, int i);
     int leaderboardd_helperrrrr_99(vector<int>& arr, int i);
     int leaderboardd_helperrrrr_100(vector<int>& arr, int i);
+    */
 };
 
 #endif  // HCTREE_HPP

@@ -18,3 +18,21 @@ TEST(BitOutputStreamTests, SIMPLE_TEST) {
     unsigned int asciiVal = stoi(bitsStr, nullptr, 2);
     ASSERT_EQ(ss.get(), asciiVal);
 }
+
+TEST(BitOutputStreamTests, TEST_FLUSH) {
+    stringstream ss;
+    BitOutputStream bos(ss);
+    bos.writeBit(1);
+    bos.writeBit(0);
+    bos.writeBit(1);
+    bos.writeBit(0);
+    bos.writeBit(1);
+    bos.writeBit(1);
+    bos.writeBit(1);
+    bos.writeBit(1);
+    bos.writeBit(1);
+
+    string bitsStr = "10101111";
+    unsigned int asciiVal = stoi(bitsStr, nullptr, 2);
+    ASSERT_EQ(ss.get(), asciiVal);
+}
