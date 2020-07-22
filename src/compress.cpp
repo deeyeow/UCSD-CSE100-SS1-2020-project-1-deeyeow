@@ -16,8 +16,8 @@
 void pseudoCompression(const string& inFileName, const string& outFileName) {
     ifstream in(inFileName, ios::binary);
     ofstream out;
-
     unsigned char c;
+    unsigned char newLine = '\n';
 
     // check if file opened successfully
     if (in.is_open()) {
@@ -32,11 +32,12 @@ void pseudoCompression(const string& inFileName, const string& outFileName) {
         tree.build(freqs);
 
         // build outfile header
-        out.open(outFileName);
+        out.open(outFileName, ios::binary);
         for (int i = 0; i < 256; i++) {
-            out << freqs[i] << endl;
+            string str = to_string(freqs[i]);
+            out.write(str.c_str(), str.length());
+            out.write((char*)&newLine, 1);
         }
-
         // reset "get" pointer to beginning of infile
         in.clear();
         in.seekg(0, ios::beg);

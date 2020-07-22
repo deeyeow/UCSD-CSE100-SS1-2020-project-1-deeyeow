@@ -21,7 +21,7 @@ class BitOutputStream {
 
   public:
     // TODO: Initialize member variables.
-    explicit BitOutputStream(ostream& os) : out(os){
+    explicit BitOutputStream(ostream& os) : out(os) {
         buf = 0;
         nbits = 0;
     };

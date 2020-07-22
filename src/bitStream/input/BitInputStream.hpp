@@ -20,7 +20,7 @@ class BitInputStream {
 
   public:
     // TODO: Initialize member variables.
-    explicit BitInputStream(istream& is) : in(is){
+    explicit BitInputStream(istream& is) : in(is) {
         buf = in.get();
         nbits = 0;
     };

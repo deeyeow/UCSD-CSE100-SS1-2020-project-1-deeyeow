@@ -6,8 +6,8 @@
 #include <queue>
 #include <stack>
 #include <vector>
-// #include "BitInputStream.hpp"
-// #include "BitOutputStream.hpp"
+#include "../bitStream/input/BitInputStream.hpp"
+#include "../bitStream/output/BitOutputStream.hpp"
 #include "HCNode.hpp"
 
 using namespace std;
@@ -33,11 +33,11 @@ class HCTree {
 
     void build(const vector<unsigned int>& freqs);
 
-    // void encode(byte symbol, BitOutputStream& out) const;
+    void encode(byte symbol, BitOutputStream& out) const;
 
     void encode(byte symbol, ostream& out) const;
 
-    // byte decode(BitInputStream& in) const;
+    byte decode(BitInputStream& in) const;
 
     byte decode(istream& in) const;
 

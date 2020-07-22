@@ -107,16 +107,6 @@ void HCTree::build(const vector<unsigned int>& freqs) {
  * efficient encoding. For this function to work, build() must be called before
  * to create the HCTree.
  */
-// void HCTree::encode(byte symbol, BitOutputStream& out) const {}
-
-/**
- * TODO: Write the encoding bits of the given symbol to ostream. You should
- * write each encoding bit as ascii char either '0' or '1' to the ostream. You
- * must not perform a comprehensive search to find the encoding bits of the
- * given symbol, and you should use the leaves vector instead to achieve
- * efficient encoding. For this function to work, build() must have been called
- * beforehand to create the HCTree.
- */
 
 // struct to find element in a vector of pointers
 struct getSymbol {
@@ -130,6 +120,48 @@ struct getSymbol {
         return node->symbol == symbol;
     }
 };
+
+void HCTree::encode(byte symbol, BitOutputStream& out) const {
+    // huffman tree should have been built by now, as well as leaves vector
+    // check if symbol exists (is a leaf/in leaves vector)
+    if (find_if(leaves->begin(), leaves->end(), getSymbol(symbol)) ==
+        leaves->end())
+        return;
+
+    // get leaf, then traverse up tree until hit root, adding '0' or
+    // '1' to a stack depending if left/right child
+    HCNode* prev = leaves->at(symbol);
+    HCNode* curr = prev->p;
+    stack<unsigned int> stack;
+
+    while (curr != nullptr) {
+        if (curr->c0 == prev)
+            stack.push(0);
+        else
+            stack.push(1);
+
+        prev = curr;
+        curr = curr->p;
+    }
+
+    // pop all from stack to reveal encoded letter in correct order
+    // push results to outstream
+    while (!stack.empty()) {
+        out.writeBit(stack.top());
+        stack.pop();
+    }
+
+    out.flush();
+}
+
+/**
+ * TODO: Write the encoding bits of the given symbol to ostream. You should
+ * write each encoding bit as ascii char either '0' or '1' to the ostream. You
+ * must not perform a comprehensive search to find the encoding bits of the
+ * given symbol, and you should use the leaves vector instead to achieve
+ * efficient encoding. For this function to work, build() must have been called
+ * beforehand to create the HCTree.
+ */
 
 void HCTree::encode(byte symbol, ostream& out) const {
     // huffman tree should have been built by now, as well as leaves vector
@@ -157,7 +189,7 @@ void HCTree::encode(byte symbol, ostream& out) const {
     // pop all from stack to reveal encoded letter in correct order
     // push results to outstream
     while (!stack.empty()) {
-        out << stack.top();
+        out.write((char*)&stack.top(), 1);
         stack.pop();
     }
 }
@@ -167,7 +199,29 @@ void HCTree::encode(byte symbol, ostream& out) const {
  * '1') from the istream to return the coded symbol. For this function to work,
  * build() must have been called beforehand to create the HCTree.
  */
-// byte HCTree::decode(BitInputStream& in) const { return ' '; }
+byte HCTree::decode(BitInputStream& in) const {
+    // check if tree has at least 1 node
+    if (root == nullptr) return '\0';
+
+    unsigned char c;
+    HCNode* curr = root;
+
+    // keep reading in from stream, until eof
+    while (1) {
+        // get next bit from bitstream
+        c = in.readBit();
+
+        // if '0', traverse left
+        if (c == 0) curr = curr->c0;
+        // else, traverse right
+        else
+            curr = curr->c1;
+
+        // if leaf node, found letter and return (stops at first leaf node
+        // found)
+        if (curr->c0 == nullptr && curr->c1 == nullptr) return curr->symbol;
+    }
+}
 
 /**
  * TODO: Decode the sequence of bits (represented as char of either '0' or '1')
@@ -185,8 +239,6 @@ byte HCTree::decode(istream& in) const {
     while (1) {
         // get next char from stream
         c = (unsigned char)in.get();
-        // check not eof
-        if (in.eof()) break;
 
         // if '0', traverse left
         if (c == '0') curr = curr->c0;
@@ -198,9 +250,6 @@ byte HCTree::decode(istream& in) const {
         // found)
         if (curr->c0 == nullptr && curr->c1 == nullptr) return curr->symbol;
     }
-
-    // stream too short, stopped at inner node
-    return '\0';
 }
 
 /* HERE BE DRAGONS */

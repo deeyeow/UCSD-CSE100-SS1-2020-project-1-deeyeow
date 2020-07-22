@@ -7,7 +7,7 @@ void BitInputStream::fill() {
 }
 
 // TODO: Read the next bit from the buffer.
-unsigned int BitInputStream::readBit() { 
+unsigned int BitInputStream::readBit() {
     // fill buffer if read all values
     if (nbits >= 8) fill();
 

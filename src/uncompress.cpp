@@ -19,6 +19,7 @@ void pseudoDecompression(const string& inFileName, const string& outFileName) {
 
     string str;
     unsigned char c;
+    char nextChar = 0;
 
     // check if file opened successfully
     if (in.is_open()) {
@@ -36,20 +37,29 @@ void pseudoDecompression(const string& inFileName, const string& outFileName) {
             }
             // update freqs vector
             freqs[i] = stoi(str);
-            // cout << (char)i << " count: " << str << endl;
+            // cout << (unsigned char)i << " count: " << str << endl;
             str = "";
         }
         tree.build(freqs);
 
         // start uncompression
-        out.open(outFileName);
-        while (!in.eof()) {
+        out.open(outFileName, ios::binary);
+        while (nextChar != EOF) {
             c = tree.decode(in);
+            /* Doesn't work when working with binary files,
+             * since all 255 values are used, no 1 value
+             * can be used as a sentinel to stop looping
             // don't output last garbage value
             if (c == '\0')
                 break;
-            else
-                out << c;
+            else {
+                cout << " " << (unsigned int)c << endl;
+                out.write((char*)&c, 1);
+            }
+            */
+            // cout << " " << (unsigned int)c << endl;
+            out.write((char*)&c, 1);
+            nextChar = in.peek();
         }
 
         in.close();
