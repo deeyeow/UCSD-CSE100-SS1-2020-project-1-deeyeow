@@ -277,7 +277,8 @@ byte HCTree::decode(istream& in) const {
    derivative wrt X is larger than Y by a constant amount.
 
     So it is ALWAYS more efficient to add the number of methods (N) than it
-   is to update each method's definition (S), by a constant amount.
+   is to update each method's definition (S), by N amount. (integral of a
+   constant is N)
 */
 /*
 int HCTree::leaderboard_helper_1(vector<int>& arr, int i) {
