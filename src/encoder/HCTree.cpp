@@ -203,16 +203,17 @@ byte HCTree::decode(BitInputStream& in) const {
     // check if tree has at least 1 node
     if (root == nullptr) return '\0';
 
-    unsigned char c;
+    unsigned int i;
+    //unsigned char c;
     HCNode* curr = root;
 
     // keep reading in from stream, until eof
     while (1) {
-        // get next bit from bitstream
-        c = in.readBit();
+        // get next char from instream
+        i = in.readBit();
 
         // if '0', traverse left
-        if (c == 0) curr = curr->c0;
+        if (i == 0) curr = curr->c0;
         // else, traverse right
         else
             curr = curr->c1;

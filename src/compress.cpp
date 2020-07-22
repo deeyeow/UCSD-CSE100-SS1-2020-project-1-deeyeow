@@ -36,7 +36,7 @@ void pseudoCompression(const string& inFileName, const string& outFileName) {
         for (int i = 0; i < 256; i++) {
             string str = to_string(freqs[i]);
             out.write(str.c_str(), str.length());
-            out.write((char*)&newLine, 1);
+            out.write((char*)&newLine, sizeof(newLine));
         }
         // reset "get" pointer to beginning of infile
         in.clear();
@@ -55,7 +55,95 @@ void pseudoCompression(const string& inFileName, const string& outFileName) {
 }
 
 /* TODO: True compression with bitwise i/o and small header (final) */
-void trueCompression(const string& inFileName, const string& outFileName) {}
+void trueCompression(const string& inFileName, const string& outFileName) {
+    ifstream in(inFileName, ios::binary);
+    ofstream out;
+    unsigned char c;
+    unsigned char newLine = '\n';
+
+    // check if file opened successfully
+    if (in.is_open()) {
+        // construct huffman tree
+        HCTree tree;
+        vector<unsigned int> freqs(256);
+        while (1) {
+            c = in.get();
+            if (in.eof()) break;
+            freqs[c]++;
+        }
+        tree.build(freqs);
+
+        // build outfile header
+        out.open(outFileName, ios::binary);
+        for (int i = 0; i < 256; i++) {
+            string str = to_string(freqs[i]);
+            out.write(str.c_str(), str.length());
+            out.write((char*)&newLine, sizeof(newLine));
+        }
+        // reset "get" pointer to beginning of infile
+        in.clear();
+        in.seekg(0, ios::beg);
+
+        // start compression
+        while (1) {
+            c = in.get();
+            if (in.eof()) break;
+            tree.encode(c, out);
+        }
+
+        in.close();
+        out.close();
+    }
+    /*
+    ifstream in(inFileName, ios::binary);
+    ofstream out;
+
+    BitInputStream bis(in);
+    BitOutputStream bos(out);
+
+    unsigned char c = 0;
+    unsigned char newLine = '\n';
+    long totalBytes = 0;
+
+    // check if file opened successfully
+    if (in.is_open()) {
+        // construct huffman tree
+        HCTree tree;
+        vector<unsigned int> freqs(256);
+        while (1) {
+            c = in.get();
+            if (in.eof()) break;
+            freqs[c]++;
+            totalBytes++;
+        }
+        tree.build(freqs);
+
+        // build outfile header
+        out.open(outFileName, ios::binary);
+        for (int i = 0; i < 256; i++) {
+            out.write((char*)&freqs[i], sizeof(freqs[i]));
+            out.write((char*)&newLine, sizeof(newLine));
+        }
+        // reset "get" pointer to beginning of infile
+        in.clear();
+        in.seekg(0, ios::beg);
+
+        // start compression
+        for (int i = 0; i < totalBytes; i++) {
+            c = in.get();
+            if (in.eof()) break;
+            // encode given 8-bit char
+            tree.encode(c, bos);
+        }
+
+        //flush last incomplete byte
+        bos.flush();
+
+        in.close();
+        out.close();
+    }
+    */
+}
 
 /* Main program that runs the compression */
 int main(int argc, char* argv[]) {

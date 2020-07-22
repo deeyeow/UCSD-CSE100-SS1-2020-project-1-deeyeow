@@ -17,3 +17,10 @@ unsigned int BitInputStream::readBit() {
 
     return temp;
 }
+
+bool BitInputStream::atEndOfFile() {
+    if (in.gcount() < 1)
+        return true;
+    else
+        return false;
+}

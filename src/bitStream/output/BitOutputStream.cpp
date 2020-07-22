@@ -9,7 +9,7 @@
  * may cause a timeout.
  */
 void BitOutputStream::flush() {
-    out << buf;
+    out.write((char*)&buf, 1);
     buf = 0;
     nbits = 0;
 }

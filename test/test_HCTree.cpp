@@ -5,6 +5,8 @@
 #include <vector>
 
 #include "HCTree.hpp"
+#include "../bitStream/input/BitInputStream.hpp"
+#include "../bitStream/output/BitOutputStream.hpp"
 
 using namespace std;
 using namespace testing;
@@ -119,10 +121,13 @@ TEST_F(ManualHCTreeFixture, TEST_DECODE_NO_BUILD_GOOD_QUERY) {
     ASSERT_EQ(tree->decode(is), 'C');
 }
 
+/* Removed feature to test if input stream was shorter than allowed
+ * Can't use '\0' as sentinel value in extended ASCII cases
 TEST_F(ManualHCTreeFixture, TEST_DECODE_NO_BUILD_BAD_QUERY_SHORT) {
     istringstream is("1");
     ASSERT_EQ(tree->decode(is), '\0');
 }
+*/
 
 /* removed feature to test if input stream was longer than allowed in Huffman
 Tree TEST_F(ManualHCTreeFixture, TEST_DECODE_NO_BUILD_BAD_QUERY_LONG) {
@@ -136,13 +141,16 @@ TEST_F(SimpleHCTreeFixture, TEST_DECODE_GOOD_QUERY) {
     ASSERT_EQ(tree.decode(is), 'A');
 }
 
+/* Removed feature to test if input stream was shorter than allowed
+ * Can't use '\0' as sentinel value in extended ASCII cases
 TEST_F(SimpleHCTreeFixture, TEST_DECODE_BAD_QUERY_SHORT) {
     istringstream is("10");
     ASSERT_EQ(tree.decode(is), '\0');
 }
+*/
 
-/* removed feature to test if input stream was longer than allowed in Huffman
-Tree TEST_F(SimpleHCTreeFixture, TEST_DECODE_BAD_QUERY_LONG) { istringstream
+/* removed feature to test if input stream was longer than allowed
+TEST_F(SimpleHCTreeFixture, TEST_DECODE_BAD_QUERY_LONG) { istringstream
 is("111"); ASSERT_EQ(tree.decode(is), '\0');
 }
 */
@@ -157,6 +165,37 @@ TEST_F(SimpleHCTreeFixture_OneEntry, TEST) {
     istringstream is("0");
     ASSERT_EQ(tree.decode(is), 'A');
 }
+
+TEST_F(SimpleHCTreeFixture, TEST_ENCODE_BOS) {
+    stringstream ss;
+    BitOutputStream bos(ss);
+
+    tree.encode('C', bos);
+    string bitsStr = "10100000";
+    unsigned int asciiVal = stoi(bitsStr, nullptr, 2);
+    ASSERT_EQ(ss.get(), asciiVal);
+}
+
+TEST_F(SimpleHCTreeFixture, TEST_DECODE_BIS) {
+    string byteStr = "10100000";
+    char byte = (char)stoi(byteStr, nullptr, 2);
+
+    stringstream ss;
+    ss.write(&byte, 1);
+    BitInputStream bis(ss);
+
+    ASSERT_EQ(tree.decode(bis), 'C');
+}
+
+
+
+
+
+
+
+
+
+
 
 /* ADD LINES OF CODE FOR THAT SWEET LEADERBOARD VICROY*/
 /*

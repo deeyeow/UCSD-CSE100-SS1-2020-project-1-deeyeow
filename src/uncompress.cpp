@@ -37,7 +37,6 @@ void pseudoDecompression(const string& inFileName, const string& outFileName) {
             }
             // update freqs vector
             freqs[i] = stoi(str);
-            // cout << (unsigned char)i << " count: " << str << endl;
             str = "";
         }
         tree.build(freqs);
@@ -46,18 +45,6 @@ void pseudoDecompression(const string& inFileName, const string& outFileName) {
         out.open(outFileName, ios::binary);
         while (nextChar != EOF) {
             c = tree.decode(in);
-            /* Doesn't work when working with binary files,
-             * since all 255 values are used, no 1 value
-             * can be used as a sentinel to stop looping
-            // don't output last garbage value
-            if (c == '\0')
-                break;
-            else {
-                cout << " " << (unsigned int)c << endl;
-                out.write((char*)&c, 1);
-            }
-            */
-            // cout << " " << (unsigned int)c << endl;
             out.write((char*)&c, 1);
             nextChar = in.peek();
         }
@@ -68,7 +55,90 @@ void pseudoDecompression(const string& inFileName, const string& outFileName) {
 }
 
 /* TODO: True decompression with bitwise i/o and small header (final) */
-void trueDecompression(const string& inFileName, const string& outFileName) {}
+void trueDecompression(const string& inFileName, const string& outFileName) {
+    ifstream in(inFileName, ios::binary);
+    ofstream out;
+
+    string str;
+    unsigned char c;
+    char nextChar = 0;
+
+    // check if file opened successfully
+    if (in.is_open()) {
+        // construct huffman tree
+        HCTree tree;
+        vector<unsigned int> freqs(256);
+
+        // go thru each line in header section
+        for (int i = 0; i < 256; i++) {
+            // read in each number
+            while (1) {
+                c = in.get();
+                if (c == '\n') break;
+                str += c;
+            }
+            // update freqs vector
+            freqs[i] = stoi(str);
+            str = "";
+        }
+        tree.build(freqs);
+
+        // start uncompression
+        out.open(outFileName, ios::binary);
+        while (nextChar != EOF) {
+            c = tree.decode(in);
+            out.write((char*)&c, 1);
+            nextChar = in.peek();
+        }
+
+        in.close();
+        out.close();
+    }
+    /*
+    ifstream in(inFileName, ios::binary);
+    ofstream out;
+
+    BitInputStream bis(in);
+    BitOutputStream bos(out);
+
+    unsigned int i = 0;
+    unsigned char c;
+
+    long totalBytes = 0;
+
+    // check if file opened successfully
+    if (in.is_open()) {
+        // construct huffman tree
+        HCTree tree;
+        vector<unsigned int> freqs(256);
+
+        // go thru each line in header section
+        for (int i = 0; i < 256; i++) {
+            // read in each number
+            in.read((char*)&i, sizeof(i));
+            // flush newline
+            in.get();
+            // update freqs vector
+            freqs[i] = i;
+            totalBytes += i;
+            // reset char
+            i = 0;
+        }
+        tree.build(freqs);
+
+        // start uncompression
+        out.open(outFileName, ios::binary);
+        for (int j = 0; j < totalBytes; j++) {
+            if (in.eof()) break;
+            c = tree.decode(bis);
+            out.write((char*)&c, 1);
+        }
+
+        in.close();
+        out.close();
+    }
+    */
+}
 
 /* Main program that runs the decompression */
 int main(int argc, char* argv[]) {

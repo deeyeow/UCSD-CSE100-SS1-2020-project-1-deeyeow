@@ -28,6 +28,8 @@ class BitInputStream {
     void fill();
 
     unsigned int readBit();
+
+    bool atEndOfFile();
 };
 
 #endif
