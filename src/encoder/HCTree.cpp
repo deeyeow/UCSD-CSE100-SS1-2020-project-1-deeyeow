@@ -195,26 +195,12 @@ void HCTree::encode(byte symbol, ostream& out) const {
  * build() must have been called beforehand to create the HCTree.
  */
 byte HCTree::decode(BitInputStream& in) const {
-    /*
     // check if tree has at least 1 node
-    if (root == nullptr) return '\0';
-    */
+    // if (root == nullptr) return '\0';
 
-    int i;
-    // unsigned char c;
+    unsigned int i;
     HCNode* curr = root;
 
-    while (curr->c0 != 0 || curr->c1 != 0) {
-        i = in.readBit();
-        // in.printBuffer();
-        if (i == 0)
-            curr = curr->c0;
-        else if (i == 1)
-            curr = curr->c1;
-    }
-
-    return (int)curr->symbol;
-    /*
     // keep reading in from stream, until eof
     while (1) {
         // get next char from instream
@@ -230,7 +216,6 @@ byte HCTree::decode(BitInputStream& in) const {
         // found)
         if (curr->c0 == nullptr && curr->c1 == nullptr) return curr->symbol;
     }
-    */
 }
 
 /**
@@ -240,7 +225,7 @@ byte HCTree::decode(BitInputStream& in) const {
  */
 byte HCTree::decode(istream& in) const {
     // check if tree has at least 1 node
-    if (root == nullptr) return '\0';
+    // if (root == nullptr) return '\0';
 
     unsigned char c;
     HCNode* curr = root;

@@ -177,6 +177,7 @@ TEST_F(SimpleHCTreeFixture, TEST_ENCODE_BOS) {
     BitOutputStream bos(ss);
 
     tree.encode('C', bos);
+    bos.flush();
     string bitsStr = "10100000";
     unsigned int asciiVal = stoi(bitsStr, nullptr, 2);
     ASSERT_EQ(ss.get(), asciiVal);

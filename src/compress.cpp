@@ -24,12 +24,16 @@ void pseudoCompression(const string& inFileName, const string& outFileName) {
         // construct huffman tree
         HCTree tree;
         vector<unsigned int> freqs(256);
+        cout << "Reading through file" << endl;
         while (1) {
             c = in.get();
             if (in.eof()) break;
             freqs[c]++;
         }
+
+        cout << "Building Huffman Tree" << endl;
         tree.build(freqs);
+        cout << "Done" << endl;
 
         // build outfile header
         out.open(outFileName, ios::binary);
@@ -43,12 +47,14 @@ void pseudoCompression(const string& inFileName, const string& outFileName) {
         in.seekg(0, ios::beg);
 
         // start compression
+        cout << "Compressing" << endl;
         while (1) {
             c = in.get();
             if (in.eof()) break;
             tree.encode(c, out);
         }
 
+        cout << "Done" << endl;
         in.close();
         out.close();
     }
@@ -66,6 +72,7 @@ void trueCompression(const string& inFileName, const string& outFileName) {
         // construct huffman tree (char -> freqs vector)
         HCTree tree;
         vector<unsigned int> freqs(256);
+        cout << "Reading through file" << endl;
         while (1) {
             c = in.get();
             if (in.eof()) break;
@@ -88,7 +95,7 @@ void trueCompression(const string& inFileName, const string& outFileName) {
 
         // start compression bit by bit(char -> int/bit)
         BitOutputStream bos(out);
-        cout << "Compressing..." << endl;
+        cout << "Compressing" << endl;
         for (int i = 0; i < totalBytes; i++) {
             c = in.get();
             if (in.eof()) break;
@@ -102,9 +109,9 @@ void trueCompression(const string& inFileName, const string& outFileName) {
         out << (unsigned int)paddedZeros;
         cout << "Padded 0s: " << paddedZeros << endl;
 
+        cout << "Done" << endl;
         in.close();
         out.close();
-        cout << "Done" << endl;
     }
 }
 

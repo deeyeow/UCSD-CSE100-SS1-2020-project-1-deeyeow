@@ -28,6 +28,7 @@ void pseudoDecompression(const string& inFileName, const string& outFileName) {
         vector<unsigned int> freqs(256);
 
         // go thru each line in header section
+        cout << "Reading from file header" << endl;
         for (int i = 0; i < freqs.size(); i++) {
             // read in each number
             while (1) {
@@ -39,16 +40,22 @@ void pseudoDecompression(const string& inFileName, const string& outFileName) {
             freqs[i] = stoi(str);
             str = "";
         }
+
+        cout << "Building Huffman Tree" << endl;
         tree.build(freqs);
+        cout << "Done" << endl;
 
         // start uncompression
         out.open(outFileName, ios::binary);
+
+        cout << "Uncompressing" << endl;
         while (nextChar != EOF) {
             c = tree.decode(in);
             out.write((char*)&c, 1);
             nextChar = in.peek();
         }
 
+        cout << "Done" << endl;
         in.close();
         out.close();
     }
@@ -78,10 +85,8 @@ void trueDecompression(const string& inFileName, const string& outFileName) {
             in >> frequency;
             // update freqs vector
             freqs[i] = frequency;
-            // get count of total bytes
-            if (frequency > 0) {
-                totalBytes += frequency;
-            }
+            // increment total bytes
+            totalBytes += frequency;
         }
 
         cout << "Building Huffman Tree" << endl;
@@ -92,7 +97,7 @@ void trueDecompression(const string& inFileName, const string& outFileName) {
         out.open(outFileName, ios::binary);
         BitInputStream bis(in);
 
-        cout << "Uncompressing..." << endl;
+        cout << "Uncompressing" << endl;
         for (int i = 0; i < totalBytes; i++) {
             // don't uncompress padded 0s
             // totalBytes only represents encoded bytes, not

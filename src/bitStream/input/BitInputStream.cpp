@@ -18,6 +18,7 @@ unsigned int BitInputStream::readBit() {
     return temp;
 }
 
+/*
 void BitInputStream::printBuffer() {
     cout << "Printing bit buffer: ";
     for (int i = 0; i < 8; i++) {
@@ -26,3 +27,4 @@ void BitInputStream::printBuffer() {
     }
     cout << endl;
 }
+*/

@@ -10,6 +10,7 @@
  */
 unsigned int BitOutputStream::flush() {
     out << buf;
+
     // record how many padded 0s
     unsigned int tempNBits = nbits;
     buf = 0;
@@ -26,11 +27,12 @@ void BitOutputStream::writeBit(unsigned int i) {
     // flush buffer if full
     if (nbits >= 8) flush();
 
-    // shit LSB left, then 'or' to update buf
+    // shift LSB left, then 'or' to update buf
     buf |= i << (7 - nbits);
     nbits++;
 }
 
+/*
 void BitOutputStream::printBuf() {
     cout << "Printing bit buffer: ";
     for (int i = 0; i < 8; i++) {
@@ -39,3 +41,4 @@ void BitOutputStream::printBuf() {
     }
     cout << endl;
 }
+*/
