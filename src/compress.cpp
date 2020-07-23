@@ -33,7 +33,7 @@ void pseudoCompression(const string& inFileName, const string& outFileName) {
 
         // build outfile header
         out.open(outFileName, ios::binary);
-        for (int i = 0; i < 256; i++) {
+        for (int i = 0; i < freqs.size(); i++) {
             string str = to_string(freqs[i]);
             out.write(str.c_str(), str.length());
             out.write((char*)&newLine, sizeof(newLine));
@@ -59,90 +59,53 @@ void trueCompression(const string& inFileName, const string& outFileName) {
     ifstream in(inFileName, ios::binary);
     ofstream out;
     unsigned char c;
-    unsigned char newLine = '\n';
+    int totalBytes = 0;
 
     // check if file opened successfully
     if (in.is_open()) {
-        // construct huffman tree
+        // construct huffman tree (char -> freqs vector)
         HCTree tree;
         vector<unsigned int> freqs(256);
         while (1) {
             c = in.get();
             if (in.eof()) break;
-            freqs[c]++;
-        }
-        tree.build(freqs);
-
-        // build outfile header
-        out.open(outFileName, ios::binary);
-        for (int i = 0; i < 256; i++) {
-            string str = to_string(freqs[i]);
-            out.write(str.c_str(), str.length());
-            out.write((char*)&newLine, sizeof(newLine));
-        }
-        // reset "get" pointer to beginning of infile
-        in.clear();
-        in.seekg(0, ios::beg);
-
-        // start compression
-        while (1) {
-            c = in.get();
-            if (in.eof()) break;
-            tree.encode(c, out);
-        }
-
-        in.close();
-        out.close();
-    }
-    /*
-    ifstream in(inFileName, ios::binary);
-    ofstream out;
-
-    BitInputStream bis(in);
-    BitOutputStream bos(out);
-
-    unsigned char c = 0;
-    unsigned char newLine = '\n';
-    long totalBytes = 0;
-
-    // check if file opened successfully
-    if (in.is_open()) {
-        // construct huffman tree
-        HCTree tree;
-        vector<unsigned int> freqs(256);
-        while (1) {
-            c = in.get();
-            if (in.eof()) break;
-            freqs[c]++;
             totalBytes++;
+            freqs[c]++;
         }
-        tree.build(freqs);
 
-        // build outfile header
+        cout << "Building Huffman Tree" << endl;
+        tree.build(freqs);
+        cout << "Done" << endl;
+
+        // build outfile header (freqs vector -> int/bit)
         out.open(outFileName, ios::binary);
-        for (int i = 0; i < 256; i++) {
-            out.write((char*)&freqs[i], sizeof(freqs[i]));
-            out.write((char*)&newLine, sizeof(newLine));
+        for (int i = 0; i < freqs.size(); i++) {
+            out << " " << freqs[i];
         }
         // reset "get" pointer to beginning of infile
         in.clear();
         in.seekg(0, ios::beg);
 
-        // start compression
+        // start compression bit by bit(char -> int/bit)
+        BitOutputStream bos(out);
+        cout << "Compressing..." << endl;
         for (int i = 0; i < totalBytes; i++) {
             c = in.get();
             if (in.eof()) break;
             // encode given 8-bit char
             tree.encode(c, bos);
         }
+        cout << "Done compressing, now doing padded 0s" << endl;
 
-        //flush last incomplete byte
-        bos.flush();
+        // flush last incomplete byte, and append padded zeros info
+        unsigned int paddedZeros = bos.flush();
+        out << (unsigned int)paddedZeros;
+        cout << "Padded 0s: " << paddedZeros << endl;
 
         in.close();
         out.close();
+        cout << "Done" << endl;
     }
-    */
 }
 
 /* Main program that runs the compression */

@@ -31,9 +31,8 @@
             "request": "launch",
             "program": "${workspaceFolder}/build/src/compress",
             "args": [
-                "--ascii",
-                "data/check.txt",
-                "data/check_comp.txt"
+                "temp.txt",
+                "compressed.txt"
             ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
@@ -49,6 +48,30 @@
             ],
             "preLaunchTask": "build compress",
             "miDebuggerPath": "/usr/bin/gdb"
-        }
+        },
+        {
+            "name": "uncompress",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/src/uncompress",
+            "args": [
+                "compressed.txt",
+                "uncompressed.txt"
+            ],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "build uncompress",
+            "miDebuggerPath": "/usr/bin/gdb"
+        },
     ]
 }

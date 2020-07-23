@@ -8,10 +8,13 @@
  * Note: don’t flush the ostream here, as it is an extremely slow operation that
  * may cause a timeout.
  */
-void BitOutputStream::flush() {
-    out.write((char*)&buf, 1);
+unsigned int BitOutputStream::flush() {
+    out << buf;
+    // record how many padded 0s
+    unsigned int tempNBits = nbits;
     buf = 0;
     nbits = 0;
+    return 8 - tempNBits;
 }
 
 /**
@@ -26,4 +29,13 @@ void BitOutputStream::writeBit(unsigned int i) {
     // shit LSB left, then 'or' to update buf
     buf |= i << (7 - nbits);
     nbits++;
+}
+
+void BitOutputStream::printBuf() {
+    cout << "Printing bit buffer: ";
+    for (int i = 0; i < 8; i++) {
+        byte temp = buf;
+        cout << ((temp >> (7 - i)) & 1);
+    }
+    cout << endl;
 }

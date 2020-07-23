@@ -29,7 +29,7 @@ class BitInputStream {
 
     unsigned int readBit();
 
-    bool atEndOfFile();
+    void printBuffer();
 };
 
 #endif

@@ -12,6 +12,11 @@
         },
         {
             "type": "shell",
+            "label": "build uncompress",
+            "command": "cd build && if ls | grep Makefile; then echo using make.. && cmake -DCMAKE_BUILD_TYPE=Debug .. && make uncompress; else echo using ninja... && ninja src/compress; fi;"
+        },
+        {
+            "type": "shell",
             "label": "build active file",
             "command": "cd build && if ls | grep Makefile; then echo using make... && cmake -DCMAKE_BUILD_TYPE=Debug .. && make ${fileBasenameNoExtension}; else echo using ninja... && ninja ${relativeFileDirname}/${fileBasenameNoExtension}; fi;"
         }

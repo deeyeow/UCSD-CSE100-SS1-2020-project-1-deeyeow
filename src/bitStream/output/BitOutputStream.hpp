@@ -26,9 +26,11 @@ class BitOutputStream {
         nbits = 0;
     };
 
-    void flush();
+    unsigned int flush();
 
     void writeBit(unsigned int i);
+
+    void printBuf();
 };
 
 #endif

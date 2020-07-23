@@ -28,7 +28,7 @@ void pseudoDecompression(const string& inFileName, const string& outFileName) {
         vector<unsigned int> freqs(256);
 
         // go thru each line in header section
-        for (int i = 0; i < 256; i++) {
+        for (int i = 0; i < freqs.size(); i++) {
             // read in each number
             while (1) {
                 c = in.get();
@@ -59,9 +59,10 @@ void trueDecompression(const string& inFileName, const string& outFileName) {
     ifstream in(inFileName, ios::binary);
     ofstream out;
 
-    string str;
+    unsigned int frequency;
+    int totalBytes = 0;
     unsigned char c;
-    char nextChar = 0;
+    unsigned int shiftAmt;
 
     // check if file opened successfully
     if (in.is_open()) {
@@ -70,74 +71,50 @@ void trueDecompression(const string& inFileName, const string& outFileName) {
         vector<unsigned int> freqs(256);
 
         // go thru each line in header section
-        for (int i = 0; i < 256; i++) {
+        cout << "Reading from file header" << endl;
+        for (int i = 0; i < freqs.size(); i++) {
             // read in each number
-            while (1) {
-                c = in.get();
-                if (c == '\n') break;
-                str += c;
+            // in.read((char*)&frequency, sizeof(i));
+            in >> frequency;
+            // update freqs vector
+            freqs[i] = frequency;
+            // get count of total bytes
+            if (frequency > 0) {
+                totalBytes += frequency;
             }
-            // update freqs vector
-            freqs[i] = stoi(str);
-            str = "";
         }
+
+        cout << "Building Huffman Tree" << endl;
         tree.build(freqs);
+        cout << "Done" << endl;
 
-        // start uncompression
+        // start uncompression bit by bit
         out.open(outFileName, ios::binary);
-        while (nextChar != EOF) {
-            c = tree.decode(in);
-            out.write((char*)&c, 1);
-            nextChar = in.peek();
+        BitInputStream bis(in);
+
+        cout << "Uncompressing..." << endl;
+        for (int i = 0; i < totalBytes; i++) {
+            // don't uncompress padded 0s
+            // totalBytes only represents encoded bytes, not
+            // padded 0s data appended to end
+            if (i == totalBytes - 1) {
+                c = (unsigned char)tree.decode(bis);
+                cout << "Last decoded char was: " << c << endl;
+                shiftAmt = (unsigned int)(in.get() - '0');
+                c >> shiftAmt;
+                cout << "After shift of " << shiftAmt << " is " << c << endl;
+                out << c;
+                break;
+            }
+            c = (unsigned char)tree.decode(bis);
+            // cout << "Decoded char: " << c << endl;
+            out << c;
         }
 
+        cout << "Done" << endl;
         in.close();
         out.close();
     }
-    /*
-    ifstream in(inFileName, ios::binary);
-    ofstream out;
-
-    BitInputStream bis(in);
-    BitOutputStream bos(out);
-
-    unsigned int i = 0;
-    unsigned char c;
-
-    long totalBytes = 0;
-
-    // check if file opened successfully
-    if (in.is_open()) {
-        // construct huffman tree
-        HCTree tree;
-        vector<unsigned int> freqs(256);
-
-        // go thru each line in header section
-        for (int i = 0; i < 256; i++) {
-            // read in each number
-            in.read((char*)&i, sizeof(i));
-            // flush newline
-            in.get();
-            // update freqs vector
-            freqs[i] = i;
-            totalBytes += i;
-            // reset char
-            i = 0;
-        }
-        tree.build(freqs);
-
-        // start uncompression
-        out.open(outFileName, ios::binary);
-        for (int j = 0; j < totalBytes; j++) {
-            if (in.eof()) break;
-            c = tree.decode(bis);
-            out.write((char*)&c, 1);
-        }
-
-        in.close();
-        out.close();
-    }
-    */
 }
 
 /* Main program that runs the decompression */
@@ -162,7 +139,7 @@ int main(int argc, char* argv[]) {
     if (userOptions.count("help") || !FileUtils::isValidFile(inFileName) ||
         outFileName.empty()) {
         cout << options.help({""}) << std::endl;
-        exit(0);
+        return 0;
     }
 
     // if compressed file is empty, output empty file
@@ -170,7 +147,7 @@ int main(int argc, char* argv[]) {
         ofstream outFile;
         outFile.open(outFileName, ios::out);
         outFile.close();
-        exit(0);
+        return 0;
     }
 
     if (isAscii) {

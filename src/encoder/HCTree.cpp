@@ -122,12 +122,6 @@ struct getSymbol {
 };
 
 void HCTree::encode(byte symbol, BitOutputStream& out) const {
-    // huffman tree should have been built by now, as well as leaves vector
-    // check if symbol exists (is a leaf/in leaves vector)
-    if (find_if(leaves->begin(), leaves->end(), getSymbol(symbol)) ==
-        leaves->end())
-        return;
-
     // get leaf, then traverse up tree until hit root, adding '0' or
     // '1' to a stack depending if left/right child
     HCNode* prev = leaves->at(symbol);
@@ -149,9 +143,8 @@ void HCTree::encode(byte symbol, BitOutputStream& out) const {
     while (!stack.empty()) {
         out.writeBit(stack.top());
         stack.pop();
+        // out.printBuf();
     }
-
-    out.flush();
 }
 
 /**
@@ -164,11 +157,13 @@ void HCTree::encode(byte symbol, BitOutputStream& out) const {
  */
 
 void HCTree::encode(byte symbol, ostream& out) const {
+    /*
     // huffman tree should have been built by now, as well as leaves vector
     // check if symbol exists (is a leaf/in leaves vector)
     if (find_if(leaves->begin(), leaves->end(), getSymbol(symbol)) ==
         leaves->end())
         return;
+    */
 
     // get leaf, then traverse up tree until hit root, adding '0' or
     // '1' to a stack depending if left/right child
@@ -200,13 +195,26 @@ void HCTree::encode(byte symbol, ostream& out) const {
  * build() must have been called beforehand to create the HCTree.
  */
 byte HCTree::decode(BitInputStream& in) const {
+    /*
     // check if tree has at least 1 node
     if (root == nullptr) return '\0';
+    */
 
-    unsigned int i;
-    //unsigned char c;
+    int i;
+    // unsigned char c;
     HCNode* curr = root;
 
+    while (curr->c0 != 0 || curr->c1 != 0) {
+        i = in.readBit();
+        // in.printBuffer();
+        if (i == 0)
+            curr = curr->c0;
+        else if (i == 1)
+            curr = curr->c1;
+    }
+
+    return (int)curr->symbol;
+    /*
     // keep reading in from stream, until eof
     while (1) {
         // get next char from instream
@@ -222,6 +230,7 @@ byte HCTree::decode(BitInputStream& in) const {
         // found)
         if (curr->c0 == nullptr && curr->c1 == nullptr) return curr->symbol;
     }
+    */
 }
 
 /**

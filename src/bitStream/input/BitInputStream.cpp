@@ -18,9 +18,11 @@ unsigned int BitInputStream::readBit() {
     return temp;
 }
 
-bool BitInputStream::atEndOfFile() {
-    if (in.gcount() < 1)
-        return true;
-    else
-        return false;
+void BitInputStream::printBuffer() {
+    cout << "Printing bit buffer: ";
+    for (int i = 0; i < 8; i++) {
+        byte temp = buf;
+        cout << ((temp >> (7 - i)) & 1);
+    }
+    cout << endl;
 }
